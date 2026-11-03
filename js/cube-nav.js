@@ -73,6 +73,15 @@ export class Category3DCube {
       cancelAnimationFrame(this.animFrameId);
       this.animFrameId = null;
     }
+    if (this.boundPointerMove) {
+      window.removeEventListener('pointermove', this.boundPointerMove);
+    }
+    if (this.boundPointerUp) {
+      window.removeEventListener('pointerup', this.boundPointerUp);
+    }
+    if (this.boundKeyDown) {
+      window.removeEventListener('keydown', this.boundKeyDown);
+    }
   }
 
   filterCategories(dimension) {
@@ -234,8 +243,10 @@ export class Category3DCube {
     }
 
     // 3. Document level pointer move & up
-    window.addEventListener('pointermove', (e) => this.onGlobalPointerMove(e));
-    window.addEventListener('pointerup', (e) => this.onGlobalPointerUp(e));
+    this.boundGlobalMove = (e) => this.onGlobalPointerMove(e);
+    this.boundGlobalUp = (e) => this.onGlobalPointerUp(e);
+    window.addEventListener('pointermove', this.boundGlobalMove);
+    window.addEventListener('pointerup', this.boundGlobalUp);
 
     // 4. Buttons
     const prevBtn = document.getElementById('cube-btn-prev');
@@ -264,6 +275,7 @@ export class Category3DCube {
         if (this.autospinText) {
           this.autospinText.textContent = `Auto-Spin: ${this.autoSpin ? 'ON' : 'OFF'}`;
         }
+        this.wakeLoop();
       });
     }
 
@@ -298,6 +310,7 @@ export class Category3DCube {
     this.startY = e.clientY;
     this.autoSpin = false;
     if (this.boxElement) this.boxElement.classList.add('grabbing');
+    this.wakeLoop();
   }
 
   onDialPointerDown(e) {
@@ -308,6 +321,7 @@ export class Category3DCube {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     this.lastDialAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+    this.wakeLoop();
   }
 
   onGlobalPointerMove(e) {
@@ -391,6 +405,7 @@ export class Category3DCube {
     this.currentIndex = (this.currentIndex + direction + this.categoryList.length) % this.categoryList.length;
     soundEngine.playWhoosh();
     this.refreshFaces();
+    this.wakeLoop();
   }
 
   refreshFaces() {
@@ -398,20 +413,44 @@ export class Category3DCube {
     this.boxElement.innerHTML = this.renderCubeFacesHTML();
   }
 
+  wakeLoop() {
+    if (!this.animFrameId) {
+      this.startLoop();
+    }
+  }
+
   startLoop() {
     const animate = () => {
+      if (!this.container || !document.body.contains(this.container)) {
+        this.animFrameId = null;
+        return;
+      }
+
       if (this.autoSpin) {
         this.targetRotY += 0.4;
       }
 
-      // Smooth damping interpolation
-      this.rotX += (this.targetRotX - this.rotX) * 0.12;
-      this.rotY += (this.targetRotY - this.rotY) * 0.12;
+      const diffX = this.targetRotX - this.rotX;
+      const diffY = this.targetRotY - this.rotY;
+      const hasMotion = Math.abs(diffX) > 0.04 || Math.abs(diffY) > 0.04 || this.autoSpin || this.isDragging || this.isDialDragging;
 
-      this.updateCubeRotation();
-      this.animFrameId = requestAnimationFrame(animate);
+      if (hasMotion) {
+        this.rotX += diffX * 0.12;
+        this.rotY += diffY * 0.12;
+        this.updateCubeRotation();
+        this.animFrameId = requestAnimationFrame(animate);
+      } else {
+        // Snap cleanly and pause loop to save 100% CPU when idle
+        this.rotX = this.targetRotX;
+        this.rotY = this.targetRotY;
+        this.updateCubeRotation();
+        this.animFrameId = null;
+      }
     };
-    this.animFrameId = requestAnimationFrame(animate);
+
+    if (!this.animFrameId) {
+      this.animFrameId = requestAnimationFrame(animate);
+    }
   }
 
   updateCubeRotation() {
@@ -461,6 +500,15 @@ export class Anime3DCarousel {
     if (this.animFrameId) {
       cancelAnimationFrame(this.animFrameId);
       this.animFrameId = null;
+    }
+    if (this.boundPointerMove) {
+      window.removeEventListener('pointermove', this.boundPointerMove);
+    }
+    if (this.boundPointerUp) {
+      window.removeEventListener('pointerup', this.boundPointerUp);
+    }
+    if (this.boundKeyDown) {
+      window.removeEventListener('keydown', this.boundKeyDown);
     }
   }
 
@@ -556,31 +604,36 @@ export class Anime3DCarousel {
       this.viewportElement.addEventListener('pointerdown', (e) => {
         this.isDragging = true;
         this.startX = e.clientX;
+        this.wakeLoop();
       });
     }
 
-    window.addEventListener('pointermove', (e) => {
+    this.boundPointerMove = (e) => {
       if (!this.isDragging) return;
       const dx = e.clientX - this.startX;
       this.targetAngle += dx * 0.45;
       this.startX = e.clientX;
-    });
+      this.wakeLoop();
+    };
 
-    window.addEventListener('pointerup', () => {
+    this.boundPointerUp = () => {
       if (this.isDragging) {
         this.isDragging = false;
         this.snapToClosestCard();
       }
-    });
+    };
 
-    // Keyboard arrow keys
-    window.addEventListener('keydown', (e) => {
+    this.boundKeyDown = (e) => {
       if (e.key === 'ArrowLeft') {
         this.step(-1);
       } else if (e.key === 'ArrowRight') {
         this.step(1);
       }
-    });
+    };
+
+    window.addEventListener('pointermove', this.boundPointerMove);
+    window.addEventListener('pointerup', this.boundPointerUp);
+    window.addEventListener('keydown', this.boundKeyDown);
 
     // Nav Buttons
     const prevBtn = document.getElementById('carousel-btn-prev');
@@ -629,6 +682,7 @@ export class Anime3DCarousel {
     this.targetAngle = -this.currentIndex * angleStep;
     soundEngine.playWhoosh();
     this.updateCardClasses();
+    this.wakeLoop();
   }
 
   snapToClosestCard() {
@@ -660,14 +714,38 @@ export class Anime3DCarousel {
     }
   }
 
+  wakeLoop() {
+    if (!this.animFrameId) {
+      this.startLoop();
+    }
+  }
+
   startLoop() {
     const animate = () => {
-      this.currentAngle += (this.targetAngle - this.currentAngle) * 0.15;
-      if (this.ringElement) {
-        this.ringElement.style.transform = `rotateY(${this.currentAngle}deg)`;
+      if (!this.container || !document.body.contains(this.container)) {
+        this.animFrameId = null;
+        return;
       }
-      this.animFrameId = requestAnimationFrame(animate);
+
+      const diff = this.targetAngle - this.currentAngle;
+      if (Math.abs(diff) > 0.04 || this.isDragging) {
+        this.currentAngle += diff * 0.15;
+        if (this.ringElement) {
+          this.ringElement.style.transform = `rotateY(${this.currentAngle}deg)`;
+        }
+        this.animFrameId = requestAnimationFrame(animate);
+      } else {
+        // Settle cleanly to exact target angle and pause loop
+        this.currentAngle = this.targetAngle;
+        if (this.ringElement) {
+          this.ringElement.style.transform = `rotateY(${this.currentAngle}deg)`;
+        }
+        this.animFrameId = null;
+      }
     };
-    this.animFrameId = requestAnimationFrame(animate);
+
+    if (!this.animFrameId) {
+      this.animFrameId = requestAnimationFrame(animate);
+    }
   }
 }
