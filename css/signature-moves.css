@@ -147,6 +147,41 @@
   text-shadow: 0 0 35px rgba(167, 139, 250, 1), 0 0 70px rgba(109, 40, 217, 0.9);
 }
 
+.mode-thunderbolt .move-title {
+  color: #fef9c3;
+  text-shadow: 0 0 35px rgba(250, 204, 21, 1), 0 0 70px rgba(234, 179, 8, 0.9), 0 0 100px rgba(56, 189, 248, 0.8);
+}
+
+.mode-starlight_arrow .move-title {
+  color: #fdf2f8;
+  text-shadow: 0 0 35px rgba(244, 114, 182, 1), 0 0 70px rgba(236, 72, 153, 0.9), 0 0 100px rgba(168, 85, 247, 0.8);
+}
+
+.mode-dimensional_warp .move-title {
+  color: #fff1f2;
+  text-shadow: 0 0 35px rgba(244, 63, 94, 1), 0 0 70px rgba(225, 29, 72, 0.9), 0 0 100px rgba(192, 132, 252, 0.8);
+}
+
+.mode-comet_starfall .move-title {
+  color: #e0e7ff;
+  text-shadow: 0 0 35px rgba(99, 102, 241, 1), 0 0 70px rgba(6, 182, 212, 0.9), 0 0 100px rgba(236, 72, 153, 0.8);
+}
+
+.mode-blade_slash .move-title {
+  color: #fff7ed;
+  text-shadow: 0 0 35px rgba(239, 68, 68, 1), 0 0 70px rgba(249, 115, 22, 0.9), 0 0 100px rgba(250, 204, 21, 0.8);
+}
+
+.mode-psychic_singularity .move-title {
+  color: #faf5ff;
+  text-shadow: 0 0 35px rgba(168, 85, 247, 1), 0 0 70px rgba(124, 58, 237, 0.9), 0 0 100px rgba(236, 72, 153, 0.8);
+}
+
+.mode-dragon_spiral .move-title {
+  color: #ecfdf5;
+  text-shadow: 0 0 35px rgba(16, 185, 129, 1), 0 0 70px rgba(6, 182, 212, 0.9), 0 0 100px rgba(52, 211, 153, 0.8);
+}
+
 .move-subtitle {
   font-size: 1rem;
   font-weight: 800;

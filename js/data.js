@@ -740,7 +740,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/1286/99889l.jpg',
     tags: ['Swordsmanship', 'Breathing Styles', 'Ufotable Sakuga', 'Demons'],
     signatureMove: 'Hinokami Kagura: Clear Blue Sky',
-    moveType: 'solar_flare',
+    moveType: 'blade_slash',
     description: 'Tanjiro Kamado returns home to find his family slaughtered by demons and his sister Nezuko turned into one. Armed with Sun Breathing techniques and his Nichirin blade, Tanjiro joins the Demon Slayer Corps to cure his sister and slay Muzan Kibutsuji.',
     quote: 'Set your heart ablaze! Go beyond your limits!'
   },
@@ -2081,7 +2081,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/13/11497l.jpg',
     tags: ['Pikachu', 'Gotta Catch Em All', 'Pokémon Master', 'Generational Legend'],
     signatureMove: 'Pikachu 10,000,000 Volt Thunderbolt',
-    moveType: 'kamehameha',
+    moveType: 'thunderbolt',
     description: 'Ash Ketchum from Pallet Town sets off on an epic journey with electric partner Pikachu to become a Pokémon Master, forging friendships, challenging gym leaders, and discovering mythical pocket monsters across all regions.',
     quote: 'Pikachu, I choose you! Thunderbolt at full power!'
   },
@@ -2098,7 +2098,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/12/58951l.jpg',
     tags: ['4D Pocket', 'Anywhere Door', 'Bamboo Copter', 'Nobita Growth'],
     signatureMove: 'Anywhere Door Dimensional Step',
-    moveType: 'kamehameha',
+    moveType: 'dimensional_warp',
     description: 'A blue robotic earless cat sent from the 22nd century lives with clumsy, lazy elementary schooler Nobita Nobi. Pulling incredible futuristic gadgets from his 4D pocket, Doraemon helps Nobita learn lessons about honesty, kindness, and perseverance.',
     quote: 'Take-copter! Dokodemo Door! Nobita-kun, let\'s embark on an adventure!'
   },
@@ -2234,7 +2234,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/12/84687l.jpg',
     tags: ['Shiny Chariot', 'Luna Nova', 'Akko Determination', 'Trigger Magic'],
     signatureMove: 'Shiny Arc Starlight Arrow',
-    moveType: 'sparkle_burst',
+    moveType: 'starlight_arrow',
     description: 'Non-magical girl Akko Kagari enrolls in prestigious Luna Nova Magical Academy to become a witch like idol Shiny Chariot. Despite struggling to fly a broom, Akko uncovers the Shiny Rod, unlocking seven ancient words of world restoration.',
     quote: 'A believing heart is your magic! Never lose that spark!'
   },
@@ -2603,7 +2603,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/6/79597l.jpg',
     tags: ['Academy Award Winner', 'Hayao Miyazaki', 'Spirits & Gods', 'Ghibli Masterpiece'],
     signatureMove: 'Dragon River Spirit: Haku Flight',
-    moveType: 'sakura_blossom',
+    moveType: 'dragon_spiral',
     description: 'During a family move to the suburbs, 10-year-old Chihiro wanders into an enchanted bathhouse for kami and spirits. When her parents are turned into pigs by the sorceress Yubaba, Chihiro must work under the name Sen and forge deep courage alongside the dragon river boy Haku.',
     quote: 'Once you meet someone, you never really forget them. It just takes a while for your memories to return.'
   },
@@ -2620,7 +2620,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/5/87048l.jpg',
     tags: ['Makoto Shinkai', 'Body Swap', 'Tiamat Comet', 'Global Blockbuster'],
     signatureMove: 'Tiamat Comet: Twilight Connection',
-    moveType: 'kamehameha',
+    moveType: 'comet_starfall',
     description: 'Tokyo high schooler Taki and rural shrine maiden Mitsuha mysteriously begin swapping bodies across dreams. As they leave notes and form an inseparable bond, Taki uncovers a cataclysmic secret about the Tiamat comet, sparking a desperate race across space and time.',
     quote: 'Wherever you are in the world, I swear that I will find you again!'
   },
@@ -2671,7 +2671,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/1704/106947l.jpg',
     tags: ['#1 All-Time Box Office', 'Kyojuro Rengoku', 'Flame Breathing', 'Ufotable Sakuga'],
     signatureMove: 'Flame Breathing Ninth Form: Rengoku',
-    moveType: 'solar_flare',
+    moveType: 'blade_slash',
     description: 'Tanjiro, Nezuko, Zenitsu, and Inosuke board the Mugen Train alongside the indomitable Flame Hashira Kyojuro Rengoku to investigate a string of vanished passengers, encountering Upper Rank Three Akaza in an earth-shattering duel of absolute spirit.',
     quote: 'Set your heart ablaze! Stand tall and live with your chest held high!'
   },
@@ -2705,7 +2705,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/8/19844l.jpg',
     tags: ['Katsuhiro Otomo', 'Neo-Tokyo', 'Cyberpunk Landmark', 'Hand-Drawn Legend'],
     signatureMove: 'Neo-Tokyo Singularity: Psychic Telekinetic Burst',
-    moveType: 'domain_expansion',
+    moveType: 'psychic_singularity',
     description: 'Set in post-apocalyptic Neo-Tokyo 2019, teenage biker gang leader Kaneda fights to save childhood friend Tetsuo Shima after a motorcycle collision awakens apocalyptic psychic powers mirroring the entity Akira who leveled Tokyo decades earlier.',
     quote: 'KANEDA! TETSUO! The future isn\'t a straight line. It has many crossroads.'
   },
@@ -2722,7 +2722,7 @@ export const ANIME_DATABASE = [
     image: 'https://cdn.myanimelist.net/images/anime/1908/135177l.jpg',
     tags: ['Makoto Shinkai', 'Door Closer', 'Keystone Cat', 'Japan Roadtrip'],
     signatureMove: 'Door of Disaster: Keystone Lockout',
-    moveType: 'kamehameha',
+    moveType: 'dimensional_warp',
     description: '17-year-old high schooler Suzume teams up with mysterious traveler Souta, a Closer tasked with locking ancient doors scattered across abandoned ruins in Japan before colossal subterranean worms cause devastating regional earthquakes.',
     quote: 'I return this land to the heavens, in the name of all who ever lived and loved upon it!'
   },

@@ -669,9 +669,26 @@ export class Anime3DCarousel {
       });
     }
 
-    // Card Click -> Open Detail Modal
+    // Card Click -> Open Detail Modal OR Fire Signature Attack
     if (this.ringElement) {
       this.ringElement.addEventListener('click', (e) => {
+        const movePill = e.target.closest('.card-3d-move');
+        if (movePill) {
+          e.stopPropagation();
+          const card = movePill.closest('.carousel-3d-card');
+          if (!card) return;
+          const animeId = card.dataset.animeId;
+          const anime = this.animeList.find(a => a.id === animeId);
+          if (anime) {
+            movesEngine.trigger(anime.moveType, {
+              title: anime.signatureMove,
+              subtitle: `${anime.title} // ${anime.studio}`,
+              quote: anime.quote
+            });
+          }
+          return;
+        }
+
         const card = e.target.closest('.carousel-3d-card');
         if (!card) return;
         const idx = parseInt(card.dataset.cardIndex, 10);

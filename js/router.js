@@ -1771,9 +1771,9 @@ export class AppRouter {
               ${(anime.tags || []).slice(0, 3).map(t => `<span class="anime-tag">${t}</span>`).join('')}
             </div>
 
-            <div class="card-move-footer">
+            <div class="card-move-footer" data-trigger-card-move="${anime.moveType}" title="Unleash ${anime.signatureMove}!">
               <span class="move-label">Move:</span>
-              <strong class="move-highlight">${anime.signatureMove}</strong>
+              <strong class="move-highlight">💥 ${anime.signatureMove}</strong>
             </div>
           </div>
         </div>
@@ -1794,7 +1794,18 @@ export class AppRouter {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const moveType = btn.dataset.triggerCardMove;
-        movesEngine.trigger(moveType);
+        const card = btn.closest('[data-anime-id]');
+        const animeId = card ? card.dataset.animeId : null;
+        const anime = animeId ? getAnimeById(animeId) : null;
+        if (anime) {
+          movesEngine.trigger(anime.moveType, {
+            title: anime.signatureMove,
+            subtitle: `${anime.title} // ${anime.studio}`,
+            quote: anime.quote
+          });
+        } else {
+          movesEngine.trigger(moveType);
+        }
       });
     });
 

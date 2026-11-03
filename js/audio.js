@@ -617,6 +617,377 @@ export class SoundFXMatrix {
   playAttackCharge() {
     this.playEnergyPulse();
   }
+
+  // ========================================================
+  // 5. SIGNATURE ATTACK SPECIFIC AUDIO SYNTHESIZERS
+  // ========================================================
+
+  /**
+   * High-Voltage Thunderbolt Discharge (Pikachu 10,000,000V)
+   * Electrical ionization noise + dual sawtooth jitter + resonant thunder roar
+   */
+  playThunderbolt() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+
+    // 1. High-voltage electrical crackle noise
+    const crackleLen = Math.floor(this.ctx.sampleRate * 0.45);
+    const crackleBuf = this.ctx.createBuffer(1, crackleLen, this.ctx.sampleRate);
+    const data = crackleBuf.getChannelData(0);
+    for (let i = 0; i < crackleLen; i++) {
+      // Sporadic steep electrical impulses
+      const isImpulse = Math.random() > 0.88;
+      data[i] = isImpulse ? (Math.random() * 2 - 1) * 1.5 : (Math.random() * 0.2 - 0.1);
+    }
+    const noiseNode = this.ctx.createBufferSource();
+    noiseNode.buffer = crackleBuf;
+
+    const noiseFilter = this.ctx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(2400, t);
+    noiseFilter.frequency.exponentialRampToValueAtTime(800, t + 0.4);
+    noiseFilter.Q.value = 6;
+
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.7, t);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+
+    noiseNode.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(this.compressor);
+    noiseNode.start(t);
+
+    // 2. Dual Sawtooth high-voltage ionization buzz
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const buzzGain = this.ctx.createGain();
+
+    osc1.type = 'sawtooth';
+    osc2.type = 'sawtooth';
+    osc1.frequency.setValueAtTime(110, t);
+    osc1.frequency.linearRampToValueAtTime(440, t + 0.12);
+    osc1.frequency.exponentialRampToValueAtTime(80, t + 0.5);
+
+    osc2.frequency.setValueAtTime(225, t);
+    osc2.frequency.linearRampToValueAtTime(880, t + 0.14);
+    osc2.frequency.exponentialRampToValueAtTime(120, t + 0.5);
+
+    buzzGain.gain.setValueAtTime(0.5, t);
+    buzzGain.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
+
+    osc1.connect(buzzGain);
+    osc2.connect(buzzGain);
+    buzzGain.connect(this.compressor);
+
+    osc1.start(t);
+    osc2.start(t);
+    osc1.stop(t + 0.55);
+    osc2.stop(t + 0.55);
+
+    // 3. Deep resonant sub-bass thunder boom
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(85, t + 0.05);
+    subOsc.frequency.exponentialRampToValueAtTime(32, t + 0.9);
+
+    subGain.gain.setValueAtTime(0.8, t + 0.05);
+    subGain.gain.exponentialRampToValueAtTime(0.001, t + 0.95);
+
+    subOsc.connect(subGain);
+    subGain.connect(this.compressor);
+    subOsc.start(t + 0.05);
+    subOsc.stop(t + 0.95);
+  }
+
+  /**
+   * Celestial Starlight Arrow (Little Witch Academia Shiny Arc)
+   * Harmonic crystal bow tension + hypersonic starlight whistle + celestial chime
+   */
+  playStarlightArrow() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+
+    // 1. Celestial magic bow drawing chord (F#5, A5, C#6, F#6)
+    const chord = [739.99, 880.00, 1108.73, 1479.98];
+    chord.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, t);
+      osc.frequency.linearRampToValueAtTime(freq * 1.05, t + 0.25);
+
+      gain.gain.setValueAtTime(0.01, t);
+      gain.gain.linearRampToValueAtTime(0.2, t + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5 + idx * 0.05);
+
+      osc.connect(gain);
+      gain.connect(this.compressor);
+      osc.start(t);
+      osc.stop(t + 0.65);
+    });
+
+    // 2. Hypersonic starlight arrow release whistle
+    const arrowOsc = this.ctx.createOscillator();
+    const arrowGain = this.ctx.createGain();
+    arrowOsc.type = 'triangle';
+    arrowOsc.frequency.setValueAtTime(600, t + 0.22);
+    arrowOsc.frequency.exponentialRampToValueAtTime(4200, t + 0.42);
+    arrowOsc.frequency.exponentialRampToValueAtTime(1200, t + 0.7);
+
+    arrowGain.gain.setValueAtTime(0.001, t + 0.22);
+    arrowGain.gain.linearRampToValueAtTime(0.4, t + 0.3);
+    arrowGain.gain.exponentialRampToValueAtTime(0.001, t + 0.75);
+
+    arrowOsc.connect(arrowGain);
+    arrowGain.connect(this.compressor);
+    arrowOsc.start(t + 0.22);
+    arrowOsc.stop(t + 0.75);
+
+    // 3. Stardust chime burst
+    const chimes = [2093.00, 2637.02, 3135.96, 4186.01];
+    chimes.forEach((f, i) => {
+      const chimeTime = t + 0.38 + i * 0.05;
+      const cOsc = this.ctx.createOscillator();
+      const cGain = this.ctx.createGain();
+      cOsc.type = 'sine';
+      cOsc.frequency.setValueAtTime(f, chimeTime);
+
+      cGain.gain.setValueAtTime(0.25, chimeTime);
+      cGain.gain.exponentialRampToValueAtTime(0.001, chimeTime + 0.3);
+
+      cOsc.connect(cGain);
+      cGain.connect(this.compressor);
+      cOsc.start(chimeTime);
+      cOsc.stop(chimeTime + 0.32);
+    });
+  }
+
+  /**
+   * Anywhere Door Dimensional Step / Spatial Warp
+   * Sub-bass gravity warp + metallic door latch snap + futuristic wormhole sweep
+   */
+  playDimensionalWarp() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+
+    // 1. Door latch click / pop
+    const clickOsc = this.ctx.createOscillator();
+    const clickGain = this.ctx.createGain();
+    clickOsc.type = 'triangle';
+    clickOsc.frequency.setValueAtTime(450, t);
+    clickOsc.frequency.exponentialRampToValueAtTime(80, t + 0.04);
+    clickGain.gain.setValueAtTime(0.6, t);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    clickOsc.connect(clickGain);
+    clickGain.connect(this.compressor);
+    clickOsc.start(t);
+    clickOsc.stop(t + 0.05);
+
+    // 2. Spatial wormhole portal sweep
+    const portalOsc = this.ctx.createOscillator();
+    const portalFilter = this.ctx.createBiquadFilter();
+    const portalGain = this.ctx.createGain();
+
+    portalOsc.type = 'sawtooth';
+    portalOsc.frequency.setValueAtTime(70, t + 0.04);
+    portalOsc.frequency.exponentialRampToValueAtTime(320, t + 0.45);
+    portalOsc.frequency.exponentialRampToValueAtTime(95, t + 0.8);
+
+    portalFilter.type = 'lowpass';
+    portalFilter.frequency.setValueAtTime(400, t + 0.04);
+    portalFilter.frequency.linearRampToValueAtTime(2200, t + 0.4);
+    portalFilter.frequency.exponentialRampToValueAtTime(300, t + 0.85);
+    portalFilter.Q.value = 5.0;
+
+    portalGain.gain.setValueAtTime(0.5, t + 0.04);
+    portalGain.gain.exponentialRampToValueAtTime(0.001, t + 0.85);
+
+    portalOsc.connect(portalFilter);
+    portalFilter.connect(portalGain);
+    portalGain.connect(this.compressor);
+
+    portalOsc.start(t + 0.04);
+    portalOsc.stop(t + 0.85);
+
+    // 3. Dimensional sub-bass boom
+    const sub = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    subOscInit: {
+      sub.type = 'sine';
+      sub.frequency.setValueAtTime(48, t + 0.08);
+      sub.frequency.exponentialRampToValueAtTime(28, t + 0.7);
+      subGain.gain.setValueAtTime(0.7, t + 0.08);
+      subGain.gain.exponentialRampToValueAtTime(0.001, t + 0.75);
+      sub.connect(subGain);
+      subGain.connect(this.compressor);
+      sub.start(t + 0.08);
+      sub.stop(t + 0.75);
+    }
+  }
+
+  /**
+   * Tiamat Comet Starfall (Your Name)
+   * Twin descending celestial glissando + cosmic shimmer + atmospheric detonation
+   */
+  playCometStarfall() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+
+    // Twin comets descending
+    [1200, 1500].forEach((startF, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(startF, t);
+      osc.frequency.exponentialRampToValueAtTime(220, t + 0.55);
+
+      gain.gain.setValueAtTime(0.3, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+
+      osc.connect(gain);
+      gain.connect(this.compressor);
+      osc.start(t);
+      osc.stop(t + 0.62);
+    });
+
+    // Cosmic detonation bloom
+    const boomOsc = this.ctx.createOscillator();
+    const boomGain = this.ctx.createGain();
+    boomOsc.type = 'sine';
+    boomOsc.frequency.setValueAtTime(120, t + 0.45);
+    boomOsc.frequency.exponentialRampToValueAtTime(35, t + 1.1);
+
+    boomGain.gain.setValueAtTime(0.75, t + 0.45);
+    boomGain.gain.exponentialRampToValueAtTime(0.001, t + 1.15);
+
+    boomOsc.connect(boomGain);
+    boomGain.connect(this.compressor);
+    boomOsc.start(t + 0.45);
+    boomOsc.stop(t + 1.15);
+  }
+
+  /**
+   * Blade & Katana Slash (Demon Slayer / Bleach / Wind Slashes)
+   * Razor-sharp steel air cut whistle + fiery combust roar
+   */
+  playBladeSlash() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+
+    // 1. Razor air slice whistle
+    const bufSize = Math.floor(this.ctx.sampleRate * 0.22);
+    const buf = this.ctx.createBuffer(1, bufSize, this.ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.sin((i / bufSize) * Math.PI);
+    }
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buf;
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(3800, t);
+    filter.frequency.exponentialRampToValueAtTime(750, t + 0.2);
+    filter.Q.value = 5.0;
+
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(0.7, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.compressor);
+    noise.start(t);
+
+    // 2. High-resonance Katana Steel Ring
+    const ring = this.ctx.createOscillator();
+    const ringGain = this.ctx.createGain();
+    ring.type = 'sine';
+    ring.frequency.setValueAtTime(1760, t + 0.05); // A6
+    ringGain.gain.setValueAtTime(0.35, t + 0.05);
+    ringGain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+    ring.connect(ringGain);
+    ringGain.connect(this.compressor);
+    ring.start(t + 0.05);
+    ring.stop(t + 0.62);
+
+    // 3. Flame ignition roar
+    const flame = this.ctx.createOscillator();
+    const flameGain = this.ctx.createGain();
+    flame.type = 'sawtooth';
+    flame.frequency.setValueAtTime(120, t + 0.08);
+    flame.frequency.exponentialRampToValueAtTime(45, t + 0.45);
+    flameGain.gain.setValueAtTime(0.4, t + 0.08);
+    flameGain.gain.exponentialRampToValueAtTime(0.001, t + 0.48);
+    flame.connect(flameGain);
+    flameGain.connect(this.compressor);
+    flame.start(t + 0.08);
+    flame.stop(t + 0.5);
+  }
+
+  /**
+   * Psychic Singularity Burst (Akira / Mob Psycho)
+   * Gravitational pitch escalation + psychic distortion + kinetic blast
+   */
+  playPsychicSingularity() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(80, t);
+    osc.frequency.exponentialRampToValueAtTime(950, t + 0.4);
+    osc.frequency.exponentialRampToValueAtTime(40, t + 0.8);
+
+    gain.gain.setValueAtTime(0.2, t);
+    gain.gain.linearRampToValueAtTime(0.6, t + 0.38);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.85);
+
+    osc.connect(gain);
+    gain.connect(this.compressor);
+    osc.start(t);
+    osc.stop(t + 0.85);
+  }
+
+  /**
+   * Dragon Flight River Roar (Spirited Away Haku)
+   * Low mythical dragon roar + cascading water whoosh
+   */
+  playDragonFlight() {
+    this.ensureContext();
+    if (!this.ctx || this.isMuted) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(90, t);
+    osc.frequency.linearRampToValueAtTime(260, t + 0.3);
+    osc.frequency.exponentialRampToValueAtTime(65, t + 0.7);
+
+    gain.gain.setValueAtTime(0.5, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.75);
+
+    osc.connect(gain);
+    gain.connect(this.compressor);
+    osc.start(t);
+    osc.stop(t + 0.75);
+  }
 }
 
 // Singleton export
