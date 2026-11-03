@@ -242,6 +242,21 @@ body.theme-josei .app-header {
   border-bottom-color: rgba(168, 85, 247, 0.25);
 }
 
+/* 14. ANIME MOVIES THEME (Golden Amber Cinematic Theater & Velvet Indigo) */
+body.theme-movies {
+  background-color: #140e06;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(245, 158, 11, 0.28) 0%, transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(251, 191, 36, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(217, 119, 6, 0.20) 0%, transparent 50%),
+    linear-gradient(180deg, #1f1408 0%, #130c05 50%, #0a0602 100%);
+  background-attachment: fixed;
+}
+body.theme-movies .app-header {
+  background: rgba(20, 14, 6, 0.9);
+  border-bottom-color: rgba(245, 158, 11, 0.35);
+}
+
 /* Utility Routes: Favorites, ML Studio, Admin */
 body.theme-favorites {
   background-color: #150914;

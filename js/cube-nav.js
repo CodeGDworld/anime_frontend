@@ -10,11 +10,12 @@ import { getAnimePoster, createStylizedAnimePosterSVG } from './poster-fallback.
 import { soundEngine, soundFXMatrix } from './audio.js';
 import { movesEngine } from './moves.js';
 
-// Order of all 13 categories
+// Order of all 14 categories (including Anime Movies Vault)
 export const ALL_CATEGORY_IDS = [
   'slice-of-life', 'mystery', 'action', 'romance',
   'spring', 'summer', 'autumn', 'winter',
-  'shounen', 'shoujo', 'kodomo', 'seinen', 'josei'
+  'shounen', 'shoujo', 'kodomo', 'seinen', 'josei',
+  'movies'
 ];
 
 /**
@@ -113,10 +114,11 @@ export class Category3DCube {
 
           <!-- Filter Pills -->
           <div class="cube-filter-row" style="margin-top: 1.25rem;">
-            <button class="cube-filter-pill ${this.activeDimension === 'all' ? 'active' : ''}" data-dim="all">🌟 All 13 Categories</button>
+            <button class="cube-filter-pill ${this.activeDimension === 'all' ? 'active' : ''}" data-dim="all">🌟 All 14 Categories</button>
             <button class="cube-filter-pill ${this.activeDimension === 'genres' ? 'active' : ''}" data-dim="genres">⚡ Genres (4)</button>
             <button class="cube-filter-pill ${this.activeDimension === 'seasons' ? 'active' : ''}" data-dim="seasons">🌸 Seasons (4)</button>
             <button class="cube-filter-pill ${this.activeDimension === 'age' ? 'active' : ''}" data-dim="age">🔥 Demographics (5)</button>
+            <button class="cube-filter-pill ${this.activeDimension === 'movies' ? 'active' : ''}" data-dim="movies">🎬 Movies (10)</button>
           </div>
         </div>
 

@@ -160,7 +160,19 @@ export const OFFICIAL_ANIME_POSTERS = {
   'jos-7': 'https://cdn.myanimelist.net/images/anime/8/38229l.jpg',    // Kids on the Slope
   'jos-8': 'https://cdn.myanimelist.net/images/anime/11/31411l.jpg',   // Usagi Drop
   'jos-9': 'https://cdn.myanimelist.net/images/anime/11/13926l.jpg',   // Ristorante Paradiso
-  'jos-10': 'https://cdn.myanimelist.net/images/anime/1769/93444l.jpg'  // Wotakoi
+  'jos-10': 'https://cdn.myanimelist.net/images/anime/1769/93444l.jpg', // Wotakoi
+
+  // ANIME MOVIES VAULT
+  'mov-1': 'https://cdn.myanimelist.net/images/anime/6/79597l.jpg',    // Spirited Away
+  'mov-2': 'https://cdn.myanimelist.net/images/anime/5/87048l.jpg',    // Your Name
+  'mov-3': 'https://cdn.myanimelist.net/images/anime/1122/96481l.jpg', // A Silent Voice
+  'mov-4': 'https://cdn.myanimelist.net/images/anime/7/75810l.jpg',    // Princess Mononoke
+  'mov-5': 'https://cdn.myanimelist.net/images/anime/1704/106947l.jpg',// Demon Slayer Mugen Train
+  'mov-6': 'https://cdn.myanimelist.net/images/anime/5/75811l.jpg',    // Howl's Moving Castle
+  'mov-7': 'https://cdn.myanimelist.net/images/anime/8/19844l.jpg',    // Akira
+  'mov-8': 'https://cdn.myanimelist.net/images/anime/1908/135177l.jpg',// Suzume
+  'mov-9': 'https://cdn.myanimelist.net/images/anime/1888/141165l.jpg',// The Boy and the Heron
+  'mov-10': 'https://cdn.myanimelist.net/images/anime/1904/120095l.jpg'// Jujutsu Kaisen 0
 };
 
 /**

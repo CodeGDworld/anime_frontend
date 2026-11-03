@@ -69,7 +69,12 @@ class Database {
       try {
         const raw = fs.readFileSync(DB_PATH, 'utf8');
         this.data = JSON.parse(raw);
-        console.log(`[DB] Loaded ${this.data.anime.length} anime, ${this.data.users.length} users.`);
+        if (!this.data.anime || this.data.anime.length < 140) {
+          console.log('[DB] Catalog updated, syncing new anime movie entries...');
+          this.seedInitialData();
+        } else {
+          console.log(`[DB] Loaded ${this.data.anime.length} anime, ${this.data.users.length} users.`);
+        }
       } catch (err) {
         console.error('[DB] Error reading database, re-seeding:', err);
         this.seedInitialData();

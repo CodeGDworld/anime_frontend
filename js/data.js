@@ -294,6 +294,29 @@ export const CATEGORIES = {
     gradient: 'linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #9333ea 100%)',
     bgTheme: 'josei-theme',
     icon: 'feather'
+  },
+
+  // ==================== CINEMATIC ANIME MOVIES ====================
+  'movies': {
+    id: 'movies',
+    dimension: 'movies',
+    name: 'Anime Movies',
+    japaneseName: '劇場版アニメ (Gekijouban Anime)',
+    tagline: 'Oscar Winners, Ghibli Masterpieces, Shinkai Epics & Box Office Titans',
+    description: `Anime feature films represent the absolute pinnacle of cinematic visual arts, monumental symphonic orchestral scores, and transcendent auteur storytelling. From the world-renowned hand-painted mythology of Studio Ghibli to the photorealistic cosmic romance of Makoto Shinkai and historical box office milestones, these films stand as timeless masterpieces.
+    
+    Whether exploring spiritual bathhouses, celestial comet encounters, cybernetic rebellions, or heartfelt redemption, cinematic anime delivers unmatched widescreen majesty, unconstrained animation budgets, and profound emotional resonance that stays with viewers for a lifetime.`,
+    signatureMove: {
+      name: 'Cinematic Starlight Comet Surge',
+      type: 'kamehameha',
+      origin: 'Auteur Cinema Galaxy',
+      sound: 'whoosh_sparkle',
+      quote: 'Once you meet someone, you never really forget them. It just takes a while for your memories to return.'
+    },
+    accentColor: '#f59e0b',
+    gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
+    bgTheme: 'movies-theme',
+    icon: 'film'
   }
 };
 
@@ -2562,6 +2585,180 @@ export const ANIME_DATABASE = [
     moveType: 'sparkle_burst',
     description: 'Narumi Momose hides her hardcore fujoshi habits at her new corporate job, until she runs into handsome childhood friend Hirotaka Nifuji, a gaming addict. Since both are otaku, Hirotaka suggests they date each other, creating hilarious, relatable office romance.',
     quote: 'If we date, I\'ll help you farm rare materials and wait for your manga deadlines. Deal?'
+  },
+
+  // ==========================================
+  // ANIME MOVIES VAULT (10 Legendary Feature Films)
+  // ==========================================
+  {
+    id: 'mov-1',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Spirited Away',
+    japaneseTitle: '千と千尋の神隠し (Sen to Chihiro no Kamikakushi)',
+    studio: 'Studio Ghibli',
+    year: 2001,
+    episodes: '2h 5m Movie',
+    rating: 8.54,
+    image: 'https://cdn.myanimelist.net/images/anime/6/79597l.jpg',
+    tags: ['Academy Award Winner', 'Hayao Miyazaki', 'Spirits & Gods', 'Ghibli Masterpiece'],
+    signatureMove: 'Dragon River Spirit: Haku Flight',
+    moveType: 'sakura_blossom',
+    description: 'During a family move to the suburbs, 10-year-old Chihiro wanders into an enchanted bathhouse for kami and spirits. When her parents are turned into pigs by the sorceress Yubaba, Chihiro must work under the name Sen and forge deep courage alongside the dragon river boy Haku.',
+    quote: 'Once you meet someone, you never really forget them. It just takes a while for your memories to return.'
+  },
+  {
+    id: 'mov-2',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Your Name.',
+    japaneseTitle: '君の名は。 (Kimi no Na wa)',
+    studio: 'CoMix Wave Films',
+    year: 2016,
+    episodes: '1h 46m Movie',
+    rating: 8.84,
+    image: 'https://cdn.myanimelist.net/images/anime/5/87048l.jpg',
+    tags: ['Makoto Shinkai', 'Body Swap', 'Tiamat Comet', 'Global Blockbuster'],
+    signatureMove: 'Tiamat Comet: Twilight Connection',
+    moveType: 'kamehameha',
+    description: 'Tokyo high schooler Taki and rural shrine maiden Mitsuha mysteriously begin swapping bodies across dreams. As they leave notes and form an inseparable bond, Taki uncovers a cataclysmic secret about the Tiamat comet, sparking a desperate race across space and time.',
+    quote: 'Wherever you are in the world, I swear that I will find you again!'
+  },
+  {
+    id: 'mov-3',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'A Silent Voice',
+    japaneseTitle: '聲の形 (Koe no Katachi)',
+    studio: 'Kyoto Animation',
+    year: 2016,
+    episodes: '2h 10m Movie',
+    rating: 8.93,
+    image: 'https://cdn.myanimelist.net/images/anime/1122/96481l.jpg',
+    tags: ['Kyoto Animation', 'Naoko Yamada', 'Redemption', 'Emotional Masterpiece'],
+    signatureMove: 'Resonant Heart: Bridge of Reconciliation',
+    moveType: 'sakura_blossom',
+    description: 'Former elementary school bully Shoya Ishida seeks out deaf classmate Shoko Nishimiya in high school to make amends for his cruel past. Directed by Naoko Yamada, this heart-wrenching KyoAni masterwork explores forgiveness, social anxiety, sign language, and redemption.',
+    quote: 'Back then, if we could have heard each other\'s voices, everything would have been so much better.'
+  },
+  {
+    id: 'mov-4',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Princess Mononoke',
+    japaneseTitle: 'もののけ姫 (Mononoke Hime)',
+    studio: 'Studio Ghibli',
+    year: 1997,
+    episodes: '2h 14m Movie',
+    rating: 8.66,
+    image: 'https://cdn.myanimelist.net/images/anime/7/75810l.jpg',
+    tags: ['Hayao Miyazaki', 'Nature vs Industry', 'Wolf Gods', 'Epic Mythos'],
+    signatureMove: 'Forest Spirit: Life and Death Cleansing',
+    moveType: 'sakura_blossom',
+    description: 'Afflicted by a lethal demon curse, Emishi prince Ashitaka journeys westward and is thrust into a bloody struggle between the industrial Tatara ironworks under Lady Eboshi and the primal gods of the forest, led by San, the feral Princess of the Wolf Gods.',
+    quote: 'To see with eyes unclouded by hate.'
+  },
+  {
+    id: 'mov-5',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Demon Slayer: Mugen Train',
+    japaneseTitle: '鬼滅の刃 無限列車編',
+    studio: 'Ufotable',
+    year: 2020,
+    episodes: '1h 57m Movie',
+    rating: 8.58,
+    image: 'https://cdn.myanimelist.net/images/anime/1704/106947l.jpg',
+    tags: ['#1 All-Time Box Office', 'Kyojuro Rengoku', 'Flame Breathing', 'Ufotable Sakuga'],
+    signatureMove: 'Flame Breathing Ninth Form: Rengoku',
+    moveType: 'solar_flare',
+    description: 'Tanjiro, Nezuko, Zenitsu, and Inosuke board the Mugen Train alongside the indomitable Flame Hashira Kyojuro Rengoku to investigate a string of vanished passengers, encountering Upper Rank Three Akaza in an earth-shattering duel of absolute spirit.',
+    quote: 'Set your heart ablaze! Stand tall and live with your chest held high!'
+  },
+  {
+    id: 'mov-6',
+    category: 'movies',
+    dimension: 'movies',
+    title: "Howl's Moving Castle",
+    japaneseTitle: 'ハウルの動く城 (Hauru no Ugoku Shiro)',
+    studio: 'Studio Ghibli',
+    year: 2004,
+    episodes: '1h 59m Movie',
+    rating: 8.66,
+    image: 'https://cdn.myanimelist.net/images/anime/5/75811l.jpg',
+    tags: ['Hayao Miyazaki', 'Fire Demon Calcifer', 'Steampunk Magic', 'Joe Hisaishi'],
+    signatureMove: 'Calcifer Flame Blast: Moving Castle Teleport',
+    moveType: 'solar_flare',
+    description: 'Cursed into an 90-year-old woman by the Witch of the Waste, quiet hatter Sophie Hatter takes refuge in the walking steampunk fortress of mysterious, vain wizard Howl, tending to fire demon Calcifer as war engulfs the kingdoms.',
+    quote: 'A heart\'s a heavy burden, but it is also the only thing that guides us home.'
+  },
+  {
+    id: 'mov-7',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Akira',
+    japaneseTitle: 'AKIRA (アキラ)',
+    studio: 'Tokyo Movie Shinsha (TMS)',
+    year: 1988,
+    episodes: '2h 4m Movie',
+    rating: 8.16,
+    image: 'https://cdn.myanimelist.net/images/anime/8/19844l.jpg',
+    tags: ['Katsuhiro Otomo', 'Neo-Tokyo', 'Cyberpunk Landmark', 'Hand-Drawn Legend'],
+    signatureMove: 'Neo-Tokyo Singularity: Psychic Telekinetic Burst',
+    moveType: 'domain_expansion',
+    description: 'Set in post-apocalyptic Neo-Tokyo 2019, teenage biker gang leader Kaneda fights to save childhood friend Tetsuo Shima after a motorcycle collision awakens apocalyptic psychic powers mirroring the entity Akira who leveled Tokyo decades earlier.',
+    quote: 'KANEDA! TETSUO! The future isn\'t a straight line. It has many crossroads.'
+  },
+  {
+    id: 'mov-8',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Suzume',
+    japaneseTitle: 'すずめの戸締まり (Suzume no Tojimari)',
+    studio: 'CoMix Wave Films',
+    year: 2022,
+    episodes: '2h 2m Movie',
+    rating: 8.32,
+    image: 'https://cdn.myanimelist.net/images/anime/1908/135177l.jpg',
+    tags: ['Makoto Shinkai', 'Door Closer', 'Keystone Cat', 'Japan Roadtrip'],
+    signatureMove: 'Door of Disaster: Keystone Lockout',
+    moveType: 'kamehameha',
+    description: '17-year-old high schooler Suzume teams up with mysterious traveler Souta, a Closer tasked with locking ancient doors scattered across abandoned ruins in Japan before colossal subterranean worms cause devastating regional earthquakes.',
+    quote: 'I return this land to the heavens, in the name of all who ever lived and loved upon it!'
+  },
+  {
+    id: 'mov-9',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'The Boy and the Heron',
+    japaneseTitle: '君たちはどう生きるか (Kimitachi wa Dou Ikiru ka)',
+    studio: 'Studio Ghibli',
+    year: 2023,
+    episodes: '2h 4m Movie',
+    rating: 8.10,
+    image: 'https://cdn.myanimelist.net/images/anime/1888/141165l.jpg',
+    tags: ['Academy Award Winner 2024', 'Hayao Miyazaki', 'Ghibli Farewell Epic', 'Surreal Realm'],
+    signatureMove: 'Tower of Stone: Creation Dimension Shift',
+    moveType: 'domain_expansion',
+    description: 'Grieving his mother in the countryside during WWII, 12-year-old Mahito Maki discovers an abandoned stone tower on the estate guided by an enigmatic talking grey heron, stepping across into an otherworldly realm shared by the living and the unborn.',
+    quote: 'I will return to my world, even if it is full of malice and grief, because I have friends to meet.'
+  },
+  {
+    id: 'mov-10',
+    category: 'movies',
+    dimension: 'movies',
+    title: 'Jujutsu Kaisen 0',
+    japaneseTitle: '劇場版 呪術廻戦 0',
+    studio: 'MAPPA',
+    year: 2021,
+    episodes: '1h 45m Movie',
+    rating: 8.48,
+    image: 'https://cdn.myanimelist.net/images/anime/1904/120095l.jpg',
+    tags: ['Yuta Okkotsu', 'Queen of Curses Rika', 'Night Parade of 100 Demons', 'MAPPA'],
+    signatureMove: 'Queen of Curses: Pure Love Beam',
+    moveType: 'kamehameha',
+    description: 'Haunted by childhood friend Rika Orimoto who transformed into a monstrous Special Grade cursed spirit, timid high schooler Yuta Okkotsu enrolls at Jujutsu High under Satoru Gojo to master his curse and protect society from Suguru Geto.',
+    quote: 'We\'ll be together forever, won\'t we Rika? This is pure, unadulterated love!'
   }
 ];
 

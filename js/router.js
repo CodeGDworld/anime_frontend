@@ -188,6 +188,8 @@ export class AppRouter {
     } else if (hash.startsWith('category/')) {
       const catId = hash.replace('category/', '');
       this.renderCategory(catId, false);
+    } else if (hash === 'movies') {
+      this.renderCategory('movies', false);
     } else if (hash === 'favorites') {
       this.renderFavorites();
     } else if (hash === 'profile') {
@@ -228,6 +230,9 @@ export class AppRouter {
     } else if (route === 'category') {
       window.location.hash = `category/${param}`;
       this.renderCategory(param, true);
+    } else if (route === 'movies') {
+      window.location.hash = 'category/movies';
+      this.renderCategory('movies', true);
     } else if (route === 'favorites') {
       window.location.hash = 'favorites';
       this.renderFavorites();
@@ -337,7 +342,36 @@ export class AppRouter {
       <!-- 3D Category Cube Navigator ("Circle it to move next categorized category") -->
       <div id="home-3d-cube-mount"></div>
 
-      <!-- 3 Categorization Pillars -->
+      <!-- ==================== SPECIAL PANEL: CINEMATIC ANIME MOVIES VAULT ==================== -->
+      <section class="movies-showcase-panel" id="home-movies-panel">
+        <div class="movies-panel-header">
+          <div class="movies-panel-title-group">
+            <div class="movies-panel-badge">
+              <span>🎬</span>
+              <span>CINEMATIC ANIME THEATER</span>
+            </div>
+            <h2 class="movies-panel-title">
+              LEGENDARY ANIME MOVIES <span class="gradient-text">VAULT</span>
+            </h2>
+            <p class="movies-panel-sub">
+              Experience Academy Award winners, Studio Ghibli mythologies, Makoto Shinkai celestial epics, and all-time global box office blockbusters with 3D Hologram Paging.
+            </p>
+          </div>
+          <button class="movies-launch-btn" id="btn-launch-movies-vault">
+            <span>EXPLORE ALL 10 MOVIES IN 3D</span> &rarr;
+          </button>
+        </div>
+
+        <!-- 4 Featured Masterpiece Movie Cards -->
+        <div class="movies-grid-preview">
+          ${this.renderMoviePreviewCard('mov-1', '🏆 Oscar Winner')}
+          ${this.renderMoviePreviewCard('mov-2', '☄️ Global Hit')}
+          ${this.renderMoviePreviewCard('mov-3', '🌸 KyoAni Masterpiece')}
+          ${this.renderMoviePreviewCard('mov-5', '🔥 #1 All-Time Box Office')}
+        </div>
+      </section>
+
+      <!-- 4 Categorization Pillars -->
       <div class="dimension-section" id="categories-section">
         
         <!-- 1. GENRES (Slice of life, Mystery, Action, Romance) -->
@@ -391,6 +425,20 @@ export class AppRouter {
             ${this.renderCategoryCard('josei')}
           </div>
         </div>
+
+        <!-- 4. CINEMATIC FEATURE FILMS (Anime Movies Vault) -->
+        <div class="dimension-block">
+          <div class="dimension-header">
+            <div class="dimension-title-group">
+              <span class="dim-tag" style="background: rgba(245, 158, 11, 0.2); border-color: rgba(245, 158, 11, 0.5); color: #fbbf24;">DIMENSION 04</span>
+              <h2 class="dimension-title">FEATURE FILMS (劇場版アニメ)</h2>
+            </div>
+            <p class="dimension-sub">Academy Award winners, cinematic blockbusters, and auteur spectacles.</p>
+          </div>
+          <div class="category-cards-grid single-col">
+            ${this.renderCategoryCard('movies')}
+          </div>
+        </div>
       </div>
     `;
 
@@ -419,10 +467,67 @@ export class AppRouter {
       });
     });
 
+    // Launch Movies Vault from Home Panel
+    const launchMoviesBtn = document.getElementById('btn-launch-movies-vault');
+    if (launchMoviesBtn) {
+      launchMoviesBtn.addEventListener('click', () => {
+        soundEngine.playWhoosh();
+        this.navigateTo('category', 'movies');
+      });
+    }
+
+    // Direct card click from Movie Previews to open detailed movie modal
+    this.mainContainer.querySelectorAll('.movie-preview-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const movieId = card.dataset.animeId;
+        soundEngine.playClick();
+        this.openAnimeModal(movieId);
+      });
+    });
+
     // Mount Interactive 3D Category Cube with Circular Gyroscope Dial
     if (this.categoryCube) this.categoryCube.destroy();
     this.categoryCube = new Category3DCube(this);
     this.categoryCube.mount('home-3d-cube-mount');
+  }
+
+  renderMoviePreviewCard(movieId, badgeText) {
+    const movie = getAnimeById(movieId);
+    if (!movie) return '';
+    const poster = getAnimePoster(movie);
+
+    return `
+      <div class="movie-preview-card" data-anime-id="${movie.id}">
+        <div class="movie-poster-box">
+          <img 
+            src="${poster}" 
+            alt="${movie.title}" 
+            class="movie-poster-img"
+            loading="lazy"
+            decoding="async"
+            onerror="this.onerror=null; this.src='${createStylizedAnimePosterSVG(movie)}';"
+          />
+          <div class="movie-oscar-badge">${badgeText}</div>
+          <div class="movie-rating-badge">⭐ ${movie.rating}</div>
+        </div>
+        <div class="movie-card-info">
+          <div>
+            <div class="movie-card-meta">
+              <span>${movie.studio}</span>
+              <span>•</span>
+              <span>${movie.year}</span>
+              <span>•</span>
+              <span>${movie.episodes}</span>
+            </div>
+            <h4 class="movie-card-title">${movie.title}</h4>
+          </div>
+          <div class="movie-card-move">
+            <span>💥</span>
+            <span>${movie.signatureMove}</span>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   renderCategoryCard(catId) {
