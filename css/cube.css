@@ -1,0 +1,737 @@
+/**
+ * Anime Nexus - 3D Cube & 3D Carousel Paging Styles
+ * Provides authentic 3D perspective transforms, rotatable polyhedron faces,
+ * circular orbit ring controls, and 3D anime poster carousel paging.
+ */
+
+/* ========================================================
+   1. 3D CATEGORY CUBE STYLES
+   ======================================================== */
+
+.cube-showcase-section {
+  position: relative;
+  padding: 3rem 1.5rem;
+  margin: 2.5rem 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(30, 41, 59, 0.6) 0%, rgba(7, 9, 14, 0.95) 75%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 60px rgba(56, 189, 248, 0.05);
+}
+
+.cube-showcase-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, rgba(56, 189, 248, 0.05) 40%, transparent 70%);
+  pointer-events: none;
+  animation: auraPulse 10s ease-in-out infinite alternate;
+}
+
+.cube-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cube-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.cube-header-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin: 0;
+  color: #ffffff;
+}
+
+.cube-header-subtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+  max-width: 650px;
+  margin: 0.5rem auto 0;
+  line-height: 1.5;
+}
+
+/* 3D Scene Viewport */
+.cube-viewport {
+  width: 100%;
+  max-width: 900px;
+  height: 480px;
+  margin: 0 auto;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Hologram Ground Grid */
+.cube-hologram-floor {
+  position: absolute;
+  bottom: 20px;
+  width: 520px;
+  height: 520px;
+  background: 
+    radial-gradient(circle at center, rgba(56, 189, 248, 0.25) 0%, transparent 70%),
+    linear-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  transform: rotateX(75deg) translateZ(-160px);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 50px rgba(56, 189, 248, 0.2);
+}
+
+/* The Rotatable 3D Cube Container */
+.cube-3d-box {
+  width: 320px;
+  height: 320px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.1s cubic-bezier(0.1, 0.8, 0.2, 1);
+  will-change: transform;
+  cursor: grab;
+}
+
+.cube-3d-box.grabbing {
+  cursor: grabbing;
+  transition: none;
+}
+
+.cube-3d-box.snapping {
+  transition: transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+}
+
+/* Cube Faces */
+.cube-face {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(56, 189, 248, 0.35);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 
+    0 0 35px rgba(0, 0, 0, 0.8),
+    inset 0 0 30px rgba(56, 189, 248, 0.12);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.cube-face::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--face-accent, #38bdf8);
+  box-shadow: 0 0 15px var(--face-accent, #38bdf8);
+}
+
+/* Face 3D Positioning (320px wide -> translateZ is 160px) */
+.cube-face-front  { transform: rotateY(0deg) translateZ(160px); }
+.cube-face-right  { transform: rotateY(90deg) translateZ(160px); }
+.cube-face-back   { transform: rotateY(180deg) translateZ(160px); }
+.cube-face-left   { transform: rotateY(-90deg) translateZ(160px); }
+.cube-face-top    { transform: rotateX(90deg) translateZ(160px); }
+.cube-face-bottom { transform: rotateX(-90deg) translateZ(160px); }
+
+/* Face Content Layout */
+.face-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.face-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.face-kanji {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--face-accent, #38bdf8);
+  text-shadow: 0 0 10px var(--face-accent, #38bdf8);
+}
+
+.face-middle {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.face-cat-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.face-move-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fca5a5;
+}
+
+/* Face Poster Preview Collage */
+.face-posters-strip {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.2rem;
+}
+
+.face-poster-thumb {
+  width: 58px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s;
+}
+
+.face-poster-thumb:hover {
+  transform: translateY(-4px) scale(1.08);
+  border-color: var(--face-accent, #38bdf8);
+}
+
+.face-footer-btn {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  background: var(--face-gradient, linear-gradient(135deg, #38bdf8, #2563eb));
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.face-footer-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(56, 189, 248, 0.4);
+}
+
+/* ========================================================
+   2. CIRCULAR ORBIT RING (THE "CIRCLE IT" CONTROL)
+   ======================================================== */
+
+.cube-orbit-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  z-index: 5;
+}
+
+/* Circular Gyroscope Dial */
+.cube-circle-dial {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 2px dashed rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.15), inset 0 0 25px rgba(56, 189, 248, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  background: radial-gradient(circle, rgba(15, 23, 42, 0.6) 0%, transparent 70%);
+}
+
+.cube-circle-dial.active {
+  cursor: grabbing;
+  border-color: #38bdf8;
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.4), inset 0 0 35px rgba(56, 189, 248, 0.2);
+}
+
+/* Dial Degree Marks */
+.circle-tick {
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  top: 4px;
+  left: 50%;
+  transform-origin: 50% 116px;
+}
+
+.circle-tick.major {
+  height: 14px;
+  width: 3px;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+/* Orbit Handle that moves with rotation */
+.circle-orbit-handle {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #38bdf8 60%, #0284c7);
+  box-shadow: 0 0 18px #38bdf8, 0 0 30px rgba(56, 189, 248, 0.6);
+  border: 2px solid #ffffff;
+  top: -16px;
+  left: calc(50% - 16px);
+  transform-origin: 16px 136px;
+  pointer-events: none;
+  transition: transform 0.05s linear;
+}
+
+.circle-center-hub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  pointer-events: none;
+}
+
+.circle-center-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+  animation: floatSubtle 3s ease-in-out infinite alternate;
+}
+
+.circle-center-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+.circle-drag-hint {
+  font-size: 0.7rem;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+/* Action Controls Bar below the circle */
+.cube-action-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cube-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cube-tool-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+.cube-tool-btn.active {
+  background: #38bdf8;
+  color: #040d1a;
+  border-color: #38bdf8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+/* Category Filter Tabs for Cube */
+.cube-filter-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cube-filter-pill {
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.8);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cube-filter-pill:hover,
+.cube-filter-pill.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* ========================================================
+   3. 3D ANIME POSTER CAROUSEL (IN-CATEGORY PAGING)
+   ======================================================== */
+
+.anime-carousel-3d-section {
+  position: relative;
+  padding: 2.5rem 1rem;
+  margin: 2rem 0;
+  background: radial-gradient(circle at 50% 20%, rgba(30, 41, 59, 0.7) 0%, rgba(7, 9, 14, 0.98) 80%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+}
+
+.carousel-3d-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.carousel-3d-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.carousel-3d-title-group h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+}
+
+.carousel-view-toggles {
+  display: flex;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 0.25rem;
+}
+
+.view-toggle-btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 9px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.view-toggle-btn.active {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* 3D Ring Viewport */
+.carousel-3d-viewport {
+  width: 100%;
+  height: 480px;
+  perspective: 1200px;
+  perspective-origin: 50% 48%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+}
+
+/* The Rotatable Ring */
+.carousel-3d-ring {
+  width: 240px;
+  height: 360px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.15);
+  will-change: transform;
+}
+
+/* Individual 3D Poster Cards in the Ring */
+.carousel-3d-card {
+  position: absolute;
+  width: 240px;
+  height: 360px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0f172a;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  backface-visibility: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s, filter 0.3s;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-reflect: below 8px linear-gradient(transparent 70%, rgba(0, 0, 0, 0.25));
+}
+
+.carousel-3d-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 15px 40px rgba(56, 189, 248, 0.35);
+}
+
+.carousel-3d-card.active-center {
+  border-color: #fbbf24;
+  box-shadow: 0 0 35px rgba(251, 191, 36, 0.4), 0 20px 45px rgba(0, 0, 0, 0.9);
+  filter: brightness(1.1);
+}
+
+.carousel-3d-card.inactive {
+  filter: brightness(0.65) blur(0.5px);
+}
+
+.card-3d-poster-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-3d-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  padding: 0.2rem 0.55rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card-3d-info {
+  padding: 0.85rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #0f172a 0%, #070a14 100%);
+}
+
+.card-3d-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 0.2rem 0;
+}
+
+.card-3d-meta {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-3d-move {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: #fca5a5;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Carousel Nav Controls (Prev / Next & Dots) */
+.carousel-3d-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.carousel-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1.5px solid rgba(56, 189, 248, 0.3);
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.carousel-nav-btn:hover {
+  background: #38bdf8;
+  color: #07090e;
+  border-color: #38bdf8;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+}
+
+.carousel-dots-list {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.carousel-dot.active {
+  width: 24px;
+  border-radius: 12px;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.carousel-counter-tag {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cube-viewport {
+    height: 380px;
+  }
+  .cube-3d-box {
+    width: 260px;
+    height: 260px;
+  }
+  .cube-face {
+    width: 260px;
+    height: 260px;
+    padding: 1.1rem;
+  }
+  .cube-face-front  { transform: rotateY(0deg) translateZ(130px); }
+  .cube-face-right  { transform: rotateY(90deg) translateZ(130px); }
+  .cube-face-back   { transform: rotateY(180deg) translateZ(130px); }
+  .cube-face-left   { transform: rotateY(-90deg) translateZ(130px); }
+  .cube-face-top    { transform: rotateX(90deg) translateZ(130px); }
+  .cube-face-bottom { transform: rotateX(-90deg) translateZ(130px); }
+
+  .face-cat-name {
+    font-size: 1.2rem;
+  }
+  .face-poster-thumb {
+    width: 45px;
+    height: 65px;
+  }
+
+  .carousel-3d-viewport {
+    height: 420px;
+  }
+  .carousel-3d-ring {
+    width: 200px;
+    height: 300px;
+  }
+  .carousel-3d-card {
+    width: 200px;
+    height: 300px;
+  }
+  .card-3d-poster-img {
+    height: 200px;
+  }
+}

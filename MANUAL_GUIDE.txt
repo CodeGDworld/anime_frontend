@@ -1,0 +1,809 @@
+====================================================================================================
+                        ANIME NEXUS - COMPLETE ARCHITECTURE & CODE MANUAL
+====================================================================================================
+This manual is formatted as a plaintext reference guide designed to be read in Notepad or any text 
+editor. It explains the entire architecture of Anime Nexus, detailing how every file works, which 
+code powers each visible surface of the web page, and how data and events flow between components 
+using visual arrow diagrams.
+
+Project Root Directory: c:\Users\HP\Documents\my_all_projects\anime_frontend\
+Architecture: Zero-Dependency Full-Stack Single-Page Application (SPA) + Node.js REST API
+Total Curated Anime: 130 official titles across 13 distinct categories
+Machine Learning: Built-in Logistic Regression Model with Sigmoid Activation Function
+====================================================================================================
+
+
+----------------------------------------------------------------------------------------------------
+TABLE OF CONTENTS
+----------------------------------------------------------------------------------------------------
+1. HIGH-LEVEL ARCHITECTURE & SYSTEM OVERVIEW
+2. VISUAL WEB PAGE SURFACE MAP (ASCII UI BLUEPRINT)
+3. COMPLETE DIRECTORY & FILE INVENTORY
+4. DETAILED FILE BREAKDOWN: WHICH CODE POWERS WHICH SURFACE
+   4.1 Core HTML Entrypoint (index.html)
+   4.2 Styling Layer (css/*.css)
+   4.3 Client-Side Logic & Dynamic UI Layer (js/*.js)
+   4.4 Backend Server, Storage & Machine Learning (server/*.js, database.json)
+5. EVENT & DATA FLOW DIAGRAMS WITH DIRECTIONAL ARROWS
+   5.1 Flow 1: Global Voice Search (Speech-to-Text) Flow
+   5.2 Flow 2: Saitama HelpBot Voice & Conversational Assistant Flow
+   5.3 Flow 3: 3D Category Cube & Gyroscope Navigation Flow
+   5.4 Flow 4: Signature Attack Dojo & Video-to-3D Shader Pipeline Flow
+   5.5 Flow 5: Dynamic "Manga Ink" Transition Shader Flow
+   5.6 Flow 6: Logistic Regression Machine Learning Popularity Engine Flow
+   5.7 Flow 7: Full-Stack Authentication, Favorites Vault & Admin Panel Flow
+6. QUICK RUN GUIDE & DEFAULT CREDENTIALS
+====================================================================================================
+
+
+====================================================================================================
+1. HIGH-LEVEL ARCHITECTURE & SYSTEM OVERVIEW
+====================================================================================================
+
+The application is structured into four cooperative tiers:
+
+  +-----------------------------------------------------------------------------------+
+  |                                   CLIENT BROWSER                                  |
+  |                                                                                   |
+  |  [index.html] ---> Single Page Skeleton Container                                 |
+  |       |                                                                           |
+  |       +---> [CSS Styling Tier]                                                    |
+  |       |     - 13 Dynamic Category Background Themes (css/category-themes.css)     |
+  |       |     - 3D Cube & Poster Carousel Styles (css/cube.css)                     |
+  |       |     - Saitama HelpBot & Glowing Aura (css/saitama.css)                    |
+  |       |     - Anime Cards, ML Studio, Auth & Admin Styles                         |
+  |       |                                                                           |
+  |       +---> [JavaScript Logic Tier (ES Modules)]                                  |
+  |             - App Bootstrap (js/app.js)                                           |
+  |             - Single Page Router & Dynamic Views (js/router.js)                   |
+  |             - Speech-to-Text Voice Engine (js/speech.js)                          |
+  |             - Saitama AI Concierge & HelpBot (js/saitama.js)                      |
+  |             - 3D Cube & Gyroscope Navigation (js/cube-nav.js)                     |
+  |             - 3D Video Shader Pipeline & WebCodecs (js/video-shader-pipeline.js)  |
+  |             - Signature Moves Canvas Engine (js/moves.js)                         |
+  |             - Dynamic Manga Ink Transition WebGL Shader (js/manga-transition.js)  |
+  |             - Web Audio Procedural Sound Matrix (js/audio.js)                     |
+  |             - Auth & Panels UI Manager (js/auth-ui.js)                            |
+  |             - Client API Layer with Offline Fallback (js/api.js)                  |
+  |             - Curated Anime Database: 130 entries (js/data.js)                    |
+  +-----------------------------------------------------------------------------------+
+                                            |
+                                            | HTTP REST API Calls
+                                            | (fetch / JSON / JWT)
+                                            v
+  +-----------------------------------------------------------------------------------+
+  |                         NODE.JS FULL-STACK BACKEND SERVER                         |
+  |                                 (server/index.js)                                 |
+  |                                                                                   |
+  |  Port: 3000 (with automatic port increment on collision e.g. 3001)               |
+  |                                                                                   |
+  |  +--------------------------------+   +-----------------------------------------+ |
+  |  |      DATABASE ENGINE           |   |       MACHINE LEARNING ENGINE           | |
+  |  |      (server/db.js)            |   |       (server/ml.js)                    | |
+  |  |                                |   |                                         | |
+  |  |  - High-speed JSON storage     |   |  - Logistic Regression Classification   | |
+  |  |  - Atomic file writes          |   |  - Sigmoid Function: 1 / (1 + e^-z)     | |
+  |  |  - User auth & JWT sessions    |   |  - Feature Normalization (Z-score)      | |
+  |  |  - Favorites list persistence  |   |  - Gradient Descent Training            | |
+  |  |  - Admin Anime Catalog CRUD    |   |  - Real-time Popularity Predictions     | |
+  |  +--------------------------------+   +-----------------------------------------+ |
+  |                  |                                         |                      |
+  |                  v                                         v                      |
+  |  +------------------------------------------------------------------------------+ |
+  |  |                 PERSISTENT STORAGE: server/data/database.json                | |
+  |  |                 Contains 130 Anime, User Accounts & Favorites                | |
+  |  +------------------------------------------------------------------------------+ |
+  +-----------------------------------------------------------------------------------+
+
+
+====================================================================================================
+2. VISUAL WEB PAGE SURFACE MAP (ASCII UI BLUEPRINT)
+====================================================================================================
+This map shows every visible surface on the user's screen and points directly to the files responsible.
+
++--------------------------------------------------------------------------------------------------+
+| SURFACE 1: TOP HEADER & NAVIGATION BAR                                                           |
+| Files: index.html (lines 40-230), css/main.css, js/router.js, js/auth-ui.js                       |
+|                                                                                                  |
+| [LOGO: ANIME NEXUS]    [Genres v] [Seasons v] [Demographics v] [💥 Attacks Dojo v] [🤖 ML Studio] |
+|                                                                                                  |
+|   +---------------------------------------+  +-----------+  +---------+  +--------+  +---------+ |
+|   | 🔍 Search anime, studios...       🎙️ |  | 🥋 3D ARENA|  | 🔊 Sound |  | 👤 Login|  | ☰ Menu  | |
+|   +---------------------------------------+  +-----------+  +---------+  +--------+  +---------+ |
+|        ^                              ^            ^              ^            ^                 |
+|        | (Live search dropdown)       | (Voice Mic)| (Three.js)   |(Web Audio) | (JWT Auth)      |
+|        | js/router.js                 | js/speech  | js/video-    | js/audio.js| js/auth-ui.js   |
+|        | css/main.css                 | css/main   | theater.js   |            | css/auth.css    |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 2: 13 DYNAMIC CATEGORY BACKGROUND THEMES                                                 |
+| File: css/category-themes.css (Changes background gradient, accent glow, and particle ambience)   |
+| e.g., Slice of Life = Sakura Rose (#f43f5e) | Winter = Glacial Frost (#38bdf8) | Action = Crimson |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 3: HERO BANNER & 3D CATEGORY CUBE ("CUBE FIGURING")                                      |
+| Files: js/cube-nav.js, css/cube.css, js/router.js                                                |
+|                                                                                                  |
+|                       +----------------------------------+                                       |
+|                       |        [ 3D CATEGORY CUBE ]      |                                       |
+|                       |           +--------------+       |                                       |
+|                       |          /|             /|       |                                       |
+|                       |         / |  MYSTERY   / |       |                                       |
+|                       |        +--+-----------+  |       |                                       |
+|                       |        |  |  🔮       |  |       |                                       |
+|                       |        |  +-----------+--+       |                                       |
+|                       |        | /  ACTION    | /        |                                       |
+|                       |        |/    ⚡       |/         |                                       |
+|                       |        +--------------+          |                                       |
+|                       |                                  |                                       |
+|                       |    ( ⭕ Circular Orbit Ring )    | <--- Swipe or drag ring to rotate     |
+|                       |      "Circle it to move next"    |      to next categorized category     |
+|                       +----------------------------------+                                       |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 4: CATEGORY VIEW & 3D ANIME POSTER CAROUSEL                                              |
+| Files: js/cube-nav.js, css/cube.css, js/poster-fallback.js, js/router.js                         |
+|                                                                                                  |
+|                [◀ Prev]            POSTER CAROUSEL 3D               [Next ▶]                     |
+|                                  +---------------------+                                         |
+|                 +---------+      |   ACTIVE POSTER     |      +---------+                        |
+|                 | Poster  |      |   Vinland Saga      |      | Poster  |                        |
+|                 | (Left)  |      |   ⭐ 8.8  • MAPPA   |      | (Right) |                        |
+|                 +---------+      +---------------------+      +---------+                        |
+|                                             |                                                    |
+|                              (Click poster opens 3D modal)                                       |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 5: ANIME CATALOG CARD GRID                                                               |
+| Files: js/router.js, css/cards.css, js/data.js, js/poster-fallback.js                            |
+|                                                                                                  |
+|   +-------------------+  +-------------------+  +-------------------+  +-------------------+     |
+|   | [POSTER IMAGE]    |  | [POSTER IMAGE]    |  | [POSTER IMAGE]    |  | [POSTER IMAGE]    |     |
+|   | Solo Leveling     |  | Frieren           |  | Death Note        |  | Steins;Gate       |     |
+|   | ⭐ 8.7 • A-1      |  | ⭐ 9.1 • Madhouse |  | ⭐ 8.6 • Madhouse |  | ⭐ 9.1 • White Fox|     |
+|   | 🤖 Hit: 94.2%     |  | 🤖 Hit: 97.5%     |  | 🤖 Hit: 95.8%     |  | 🤖 Hit: 98.1%     |     |
+|   | ❤️ Favorite Heart |  | ❤️ Favorite Heart |  | ❤️ Favorite Heart |  | ❤️ Favorite Heart |     |
+|   +-------------------+  +-------------------+  +-------------------+  +-------------------+     |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 6: DYNAMIC ANIME DETAIL MODAL                                                            |
+| Files: index.html (lines 274-282), js/router.js, css/main.css, js/api.js                          |
+|                                                                                                  |
+|   +------------------------------------------------------------------------------------------+   |
+|   |  ANIME SPOTLIGHT MODAL                                                               [X] |   |
+|   |  +--------------------+  TITLE: Attack on Titan (Shingeki no Kyojin)                     |   |
+|   |  |                    |  Studio: MAPPA / WIT • Year: 2013 • Rating: ⭐ 9.0               |   |
+|   |  |   HIGH RES POSTER  |  Synopsis: Humanity lives inside three concentric walls...       |   |
+|   |  |   OFFICIAL ARTWORK |                                                                  |   |
+|   |  |                    |  ⚡ SIGNATURE MOVE: Thunder Spear Barrage                        |   |
+|   |  +--------------------+  🤖 LOGISTIC REGRESSION PREDICTION: 97.4% Hit Probability        |   |
+|   |                                                                                          |   |
+|   |  [ ❤️ Add to Favorites ]   [ 💥 Unleash Attack Animation ]   [ 🥋 View in 3D Arena ]     |   |
+|   +------------------------------------------------------------------------------------------+   |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 7: ATTACK MOVES CANVAS & VIDEO-TO-3D SHADER PIPELINE                                     |
+| Files: js/moves.js, js/video-shader-pipeline.js, js/audio.js, css/signature-moves.css            |
+|                                                                                                  |
+|   Screen-wide Canvas Layer overlaying everything when triggered:                                 |
+|   - Kamehameha: Cyan energy blast + particle shockwave + sound                                   |
+|   - Serious Punch: Atmospheric red shockwave + screen shatter + sonic boom                       |
+|   - Domain Expansion: Dark cosmic void + floating kanji eye mesh                                 |
+|   - Sakura Vortex: Healing petal blizzard + soothing chime                                       |
+|   - Ice Glaciation: Glacial frost crystals + cracking ice audio                                  |
+|   - Video-to-3D Shader: Hidden <video> feeds THREE.VideoTexture emissive mesh at 60 FPS          |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 8: DYNAMIC "MANGA INK" TRANSITION OVERLAY                                                |
+| Files: js/manga-transition.js, WebGL GLSL Fragment Shader                                         |
+|                                                                                                  |
+|   Triggers during page cuts: Old page dissolves into monochrome manga halftone dots and sumi-e   |
+|   ink splatters before resolving smoothly into the new category or view.                         |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 9: SAITAMA INTERACTIVE HELPBOT (BOTTOM-RIGHT FLOATING WIDGET)                            |
+| Files: js/saitama.js, css/saitama.css, js/speech.js                                              |
+|                                                                                                  |
+|       +-------------------------------------------------------+                                  |
+|       | SERIOUS PUNCH PICK: "Vinland Saga" from Winter Realm! |                                  |
+|       |                                                       |                                  |
+|       | [ 🔥 HYPE ACTION ]           (Neon Cyan Pill)         |                                  |
+|       | [ 🌸 CHILL SLICE OF LIFE ]   (Neon Cyan Pill)         |                                  |
+|       | [ 🥊 ONE PUNCH PICK ]        (Vibrant Magenta Pill)   |                                  |
+|       |                                                       |                                  |
+|       | 💬 Ask Saitama Anything (Voice / Text) ▾              |                                  |
+|       |   [ Chat Stream & Embedded Mini Cards ]               |                                  |
+|       |   +-----------------------------------------------+   |                                  |
+|       |   | Type message here...                  🎙️ | ➤ |   |                                  |
+|       |   +-----------------------------------------------+   |                                  |
+|       +---------------------------▲---------------------------+                                  |
+|                                   | Tail                                                         |
+|                             +------------+                                                       |
+|                             | (🟡Saitama)| <--- Golden Radiant Aura Halo Glow                    |
+|                             | [HELP] Dot |      (Click toggles dialog card)                      |
+|                             +------------+                                                       |
++--------------------------------------------------------------------------------------------------+
+| SURFACE 10: SPECIALIZED VIEWS (ROUTED DYNAMICALLY INTO #app-content)                             |
+| Files: js/router.js, css/ml.css, css/admin.css, css/favorites.css                                |
+|                                                                                                  |
+|  View A: #ml-studio   ---> Interactive Sigmoid Curve, Weight Sliders & Live Predictor            |
+|  View B: #favorites   ---> User's personal favorites vault with 1-click removal                  |
+|  View C: #admin       ---> Full CRUD Table for 130 anime, stats analytics & user accounts        |
+|  View D: #profile     ---> User details, hero rank, and account statistics                      |
++--------------------------------------------------------------------------------------------------+
+
+
+====================================================================================================
+3. COMPLETE DIRECTORY & FILE INVENTORY
+====================================================================================================
+
+Below is the complete catalog of all 32 files in this project:
+
+DIRECTORY / FILE PATH                     SIZE (BYTES)  PRIMARY FUNCTION & ROLE
+----------------------------------------------------------------------------------------------------
+c:\Users\HP\Documents\my_all_projects\anime_frontend\
+  index.html                                   14,907   HTML5 document skeleton, navigation & modals
+  package.json                                    715   Project metadata and npm start script
+  README.md                                    11,912   Full stack overview and features documentation
+  MANUAL_GUIDE.txt                                NEW   This exhaustive architectural manual
+
+css/
+  css/main.css                                 20,920   Global layout, header, search bar & modal styles
+  css/category-themes.css                      14,089   13 dynamic category background theme palettes
+  css/cube.css                                 16,494   3D Cube navigation & 3D Poster Carousel styles
+  css/saitama.css                              11,770   Saitama avatar aura, white card & voice chat
+  css/cards.css                                14,892   Anime card grid, holographic tilt, badges
+  css/signature-moves.css                       9,520   Attacks dojo canvas, speedlines, energy bursts
+  css/ml.css                                    7,537   ML Studio, Sigmoid graph & calculation sliders
+  css/admin.css                                 9,364   Admin Panel, stats tiles, 130-anime CRUD table
+  css/auth.css                                  9,368   Login, register, and profile modal overlays
+  css/favorites.css                             3,701   Favorites Vault grid and empty state graphics
+  css/animations.css                            1,265   Reusable keyframe animations & aura pulses
+
+js/
+  js/app.js                                     3,058   Bootstrap module initializing all subsystems
+  js/router.js                                 70,047   Dynamic SPA router, view renderers & search
+  js/data.js                                  123,835   Master dataset: 13 categories, 130 anime
+  js/api.js                                    15,349   REST client API layer with offline fallback
+  js/speech.js                                  6,505   Web Speech API voice recognition engine
+  js/saitama.js                                25,727   Saitama HelpBot concierge & intent matcher
+  js/cube-nav.js                               22,646   3D Category Cube & 3D cylindrical Carousel
+  js/moves.js                                  28,802   Procedural 2D/WebGL anime attack animations
+  js/audio.js                                  19,073   Procedural Web Audio API sound-FX matrix
+  js/manga-transition.js                       11,219   WebGL GLSL Halftone ink dissolve transition
+  js/video-shader-pipeline.js                  18,553   Video-to-3D WebCodecs/WebGL texture pipeline
+  js/video-theater.js                          18,891   3D Video Hologram Arena with Three.js orbit
+  js/poster-fallback.js                        16,080   High-res poster resolver & SVG vector fallback
+  js/auth-ui.js                                13,408   Authentication modal and header user slot
+
+server/
+  server/index.js                              14,974   Zero-dependency Node.js HTTP REST API server
+  server/db.js                                 12,426   Atomic JSON storage engine, auth & favorites
+  server/ml.js                                 11,478   Logistic Regression ML engine & Sigmoid math
+  server/data/database.json                   121,778   Persistent data store (130 anime, 2 users)
+----------------------------------------------------------------------------------------------------
+
+
+====================================================================================================
+4. DETAILED FILE BREAKDOWN: WHICH CODE POWERS WHICH SURFACE
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+4.1 Core HTML Entrypoint (index.html)
+----------------------------------------------------------------------------------------------------
+File: index.html
+Lines: 308 lines
+Role: Master Single Page Application container. Contains static navigational scaffolding and 
+      anchors where dynamic JavaScript views inject content.
+
+Key DOM Elements & Controlled Surfaces:
+- `<div id="manga-transition-canvas">`: Target for WebGL GLSL Halftone Ink dissolve shaders.
+- `<header class="app-header">`: Sticky navigation bar containing:
+    * Dropdown Menus: Genres (4), Seasons (4), Demographics (5), Attacks Dojo (6).
+    * `<div class="search-wrapper">`:
+        - `#global-search-input`: Text input for live instant search.
+        - `#voice-search-btn`: Microphone icon button (🎙️) powering voice recognition.
+        - `#search-results-dropdown`: Pop-up results container with live thumbnails.
+    * `#nav-arena-btn`: Launches the 3D Video Hologram Arena.
+    * `#audio-toggle-btn`: Toggles Web Audio procedural sound matrix (ON/OFF).
+    * `#header-user-slot`: Dynamically populated by js/auth-ui.js with User/Admin badge.
+- `<main id="app-content">`: Master dynamic viewport where js/router.js injects Home, Category,
+  ML Studio, Favorites, Admin, and Profile views without refreshing the browser.
+- `<div id="anime-detail-modal">`: Popup dialog displaying full anime information, synopsis,
+  ratings, ML score, and attack triggers.
+- `<script type="module" src="js/app.js">`: Bootstraps ES module loading.
+
+----------------------------------------------------------------------------------------------------
+4.2 Styling Layer (css/*.css)
+----------------------------------------------------------------------------------------------------
+
+1. css/main.css
+   Surface: Global layout, typography, header, search bar, and anime detail modal.
+   Features:
+   - Modern dark slate foundation with CSS custom properties (`--bg-primary`, `--accent-cyan`).
+   - `.search-wrapper` and `.voice-search-btn`: Absolute positioning for microphone inside search.
+   - `.voice-search-btn.listening`: Keyframe red-pulse animation when microphone is active.
+   - `.search-input.voice-active`: Red glow border while user speaks into microphone.
+   - Modal backdrop, responsive breakpoints, and glassmorphism styling.
+
+2. css/category-themes.css
+   Surface: Entire page background dynamically adapting per category.
+   Features:
+   - Injects custom CSS classes onto the `<body>` element when routing between categories:
+     * `.theme-slice-of-life`: Pastel sakura rose (#f43f5e) and gentle floral glow.
+     * `.theme-mystery`: Obsidian violet and noir purple shadow matrix.
+     * `.theme-action`: Volcanic crimson (#ef4444) and ember fire accents.
+     * `.theme-romance`: Radiant magenta (#ec4899) and warm starlight.
+     * `.theme-winter`: Glacial cyan (#38bdf8) and sub-zero frost shimmer.
+     * `.theme-spring`: Emerald sprout (#10b981) and fresh spring breeze.
+     * `.theme-summer`: Solar amber (#f59e0b) and midday heat haze.
+     * `.theme-autumn`: Maple bronze (#d97706) and golden twilight.
+     * `.theme-shounen` / `.theme-seinen` / etc.: Demographic battle palettes.
+     * `.theme-home`: Balanced eye-friendly midnight slate and indigo starlight.
+
+3. css/cube.css
+   Surface: 3D Category Cube and 3D Cylindrical Poster Carousel.
+   Features:
+   - Uses CSS 3D Transforms (`transform-style: preserve-3d`, `perspective: 1200px`).
+   - `.cube-3d`: 6-sided 3D cube with faces rotated along X and Y axes (`rotateY(0deg)`,
+     `rotateY(90deg)`, `rotateY(180deg)`, `rotateY(-90deg)`, `rotateX(90deg)`, `rotateX(-90deg)`).
+   - `.cube-orbit-ring`: Circular gyroscope dial with neon sweep border for rotating categories.
+   - `.carousel-3d-stage`: Cylindrical ring displaying 10 anime posters distributed evenly across 
+     360 degrees (`rotateY(calc(var(--index) * 36deg)) translateZ(380px)`).
+
+4. css/saitama.css
+   Surface: Floating Saitama HelpBot widget in bottom-right corner.
+   Features:
+   - `.saitama-aura-wrapper`: Circular avatar badge with radiant golden-yellow aura halo glow
+     (`box-shadow: 0 0 25px #facc15, 0 0 50px rgba(234, 179, 8, 0.65)`).
+   - `.saitama-card`: High-contrast pure white speech card with rounded corners (`border-radius: 20px`).
+   - `.chip-action` & `.chip-sol`: Solid black pill buttons with neon cyan border (`#00f0ff`).
+   - `.chip-punch`: Solid vibrant magenta pill button (`#ff2a85`).
+   - `.saitama-mic-btn.listening`: Expanding red ripple wave when HelpBot listens to speech.
+
+5. css/cards.css
+   Surface: Catalog grid of anime cards.
+   Features:
+   - 3D hover tilt perspective with mouse movement.
+   - Holographic foil shimmer on high-tier ratings (⭐ 8.5+).
+   - Studio badge, release year pill, signature move tag, and ML hit probability pill.
+
+6. css/signature-moves.css
+   Surface: Full-screen visual effects for anime attack moves.
+   Features:
+   - Fullscreen fixed canvas container with z-index: 5000.
+   - Screen shake animations (`@keyframes screen-quake`).
+   - Manga speedlines, radial blast waves, and Japanese Kanji banner typography.
+
+7. css/ml.css
+   Surface: Logistic Regression ML Studio page (`#ml-studio`).
+   Features:
+   - Interactive SVG Sigmoid curve coordinate grid (`z = w·x + b`).
+   - Dynamic decision boundary marker and interactive feature weight sliders.
+
+8. css/admin.css, css/auth.css, css/favorites.css
+   Surfaces: Admin command center table, Login/Register modal, and Favorites Vault.
+
+----------------------------------------------------------------------------------------------------
+4.3 Client-Side Logic & Dynamic UI Layer (js/*.js)
+----------------------------------------------------------------------------------------------------
+
+1. js/app.js
+   Role: Master Application Bootstrapper.
+   Connections:
+   - Imports and initializes `mangaTransition` (WebGL canvas).
+   - Initializes `video3DShaderPipeline` (hidden HTML5 video tags).
+   - Initializes `movesEngine` and `video3DTheater`.
+   - Initializes `AppRouter` and binds hash changes.
+   - Initializes `AuthAndPanelsUI` and checks active JWT session.
+   - Initializes `SaitamaAssistant` (HelpBot).
+
+2. js/router.js
+   Role: Dynamic Single-Page Application (SPA) Router & View Builder.
+   Methods & Surfaces:
+   - `renderHome()`: Injects Hero section, 3D Category Cube, and Top 10 Trending Anime.
+   - `renderCategory(categoryId)`: Updates category background theme, renders 3D Poster 
+     Carousel or Grid view, and displays 10 curated category anime.
+   - `renderMLStudio()`: Renders interactive Sigmoid S-curve and feature weight simulator.
+   - `renderFavorites()`: Renders user's personal favorites vault.
+   - `renderAdmin()`: Renders admin management portal with CRUD table for 130 anime.
+   - `setupSearch()`: Attaches live text filtering and binds `#voice-search-btn` to `voiceRecognition`.
+   - `openAnimeModal(id)`: Builds and displays full 3D detail modal for any anime.
+
+3. js/speech.js
+   Role: Speech-to-Text Voice Recognition Engine (Web Speech API).
+   Classes & Methods:
+   - `VoiceRecognitionEngine`:
+     * `startSearchListening(inputEl, callback)`: Listens to user voice, streams interim 
+       transcription into `#global-search-input`, and fires live search filtering.
+     * `startHelpBotListening(inputEl, callback)`: Streams spoken words into Saitama HelpBot.
+     * `fallbackSimulation()`: If browser microphone permission is blocked, automatically 
+       executes an animated typing simulation with sample anime voice queries so it never fails.
+
+4. js/saitama.js
+   Role: Interactive Saitama HelpBot & AI Concierge.
+   Surfaces & Interactions:
+   - Renders the circular Saitama SVG avatar badge matching the user's reference image.
+   - Renders the white speech card with action chips:
+     * `🔥 HYPE ACTION` -> Recommends high-energy action anime (*Solo Leveling*, *Attack on Titan*).
+     * `🌸 CHILL SLICE OF LIFE` -> Recommends soothing anime (*Frieren*, *Bocchi the Rock!*).
+     * `🥊 ONE PUNCH PICK` -> Calculates top ML hit (*Vinland Saga*) and unleashes Serious Punch!
+   - Natural Language Intent Engine (`handleUserQuery`):
+     * Parses queries like "Recommend romance", "Winter anime", "Explain ML", "Serious Punch",
+       "Take me to favorites", or anime names like "Chainsaw Man".
+     * Embeds mini anime poster cards inside chat with 1-click "VIEW" modal launcher.
+   - Voice Integration: Mic button triggers `voiceRecognition.startHelpBotListening()`.
+
+5. js/cube-nav.js
+   Role: 3D Category Cube Navigation & Cylindrical Poster Carousel.
+   Classes:
+   - `Category3DCube`: Handles mouse drag, touch swipe, and circular gyroscope dial rotation. 
+     Calculates 3D orientation (`currentRotX`, `currentRotY`) and navigates to target category.
+   - `Anime3DCarousel`: Arranges 10 anime posters in a 3D cylindrical ring with smooth rotation.
+
+6. js/moves.js
+   Role: Signature Attacks Canvas Engine.
+   Moves Implemented:
+   - `kamehameha`: Cyan charging orb + full-width plasma beam + blue particle vortex.
+   - `serious_punch`: Saitama death blow, screen shatter fracture lines, shockwave distortion.
+   - `domain_expansion`: Dark infinite void, celestial halo rings, floating eye kanji.
+   - `sakura_blossom`: Swirling pink cherry blossom petals, gentle wind swirl.
+   - `ice_glaciation`: Sub-zero frost spikes spreading across screen, ice crystals.
+   - `solar_flare`: Blinding white-gold flash, radial lens flare, fading afterglow.
+
+7. js/audio.js
+   Role: Web Audio API Procedural Sound Matrix.
+   Synthesizes authentic procedural anime sound effects without external audio files:
+   - Energy beam whoosh, sonic boom explosion, ink splatters, halftone pops, and cube clacks.
+
+8. js/manga-transition.js
+   Role: WebGL Dynamic "Manga Ink" Transition Shaders.
+   Shaders:
+   - Custom GLSL vertex and fragment shader.
+   - Page cuts dissolve into monochrome Halftone screentone dots and Sumi-e ink splatters.
+
+9. js/video-shader-pipeline.js & js/video-theater.js
+   Role: Video-to-3D Shader Pipeline (WebCodecs & WebGL / Three.js).
+   Architecture:
+   - Hidden HTML5 `<video autoplay muted loop playsinline style="display:none">` tags.
+   - Feeds `THREE.VideoTexture` bound to emissive curved meshes and particle billboard clouds.
+
+10. js/data.js & js/poster-fallback.js
+    Role: Master dataset with 130 curated anime entries across 13 categories with authentic posters, 
+    studios, ratings, and feature statistics; plus SVG vector fallback generator.
+
+11. js/api.js & js/auth-ui.js
+    Role: Unified client API layer communicating with Node.js backend with automatic localStorage 
+    fallback, managing user authentication and modal interfaces.
+
+----------------------------------------------------------------------------------------------------
+4.4 Backend Server, Storage & Machine Learning (server/*.js, database.json)
+----------------------------------------------------------------------------------------------------
+
+1. server/index.js
+   Role: Zero-dependency Node.js HTTP REST API Server.
+   Port: 3000 (auto-increments on collision e.g. 3001).
+   Endpoints:
+   - `GET  /api/health`: Health status and ML model state.
+   - `POST /api/auth/register`: User registration with SHA-256 password hashing.
+   - `POST /api/auth/login`: User authentication returning JWT session token.
+   - `GET  /api/anime`: Retrieves catalog of 130 anime.
+   - `POST /api/favorites/toggle`: Synchronizes user favorites list.
+   - `POST /api/ml/predict`: Runs real-time popularity prediction on any anime.
+   - `GET  /api/admin/stats`: Master admin statistics (total users, anime, favorites).
+
+2. server/ml.js
+   Role: In-memory Logistic Regression Machine Learning Engine.
+   Mathematical Formulation:
+   - Linear combination:
+     z = w1*Rating + w2*Members + w3*Favorites + w4*StudioPrestige + w5*Year + bias
+   - Sigmoid Activation Function:
+     P(Hit = 1) = 1 / (1 + e^-z)
+   - Features Normalized via Z-Score: (x - mean) / std_deviation.
+   - Trained via Gradient Descent with binary cross-entropy loss over 130 anime.
+
+3. server/db.js & server/data/database.json
+   Role: File-based persistence engine using atomic writes.
+   Stores 130 anime records, user accounts, and favorites lists safely without corrupting data.
+
+
+====================================================================================================
+5. EVENT & DATA FLOW DIAGRAMS WITH DIRECTIONAL ARROWS
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+5.1 Flow 1: Global Voice Search (Speech-to-Text) Flow
+----------------------------------------------------------------------------------------------------
+
+User Clicks 🎙️ Button in Search Bar
+          |
+          v
+[index.html: #voice-search-btn]
+          |
+          v (click event)
+[js/router.js: setupSearch()]
+          |
+          v (calls startSearchListening)
+[js/speech.js: VoiceRecognitionEngine]
+          |
+          +---> Activates Web Speech API (window.SpeechRecognition)
+          +---> Adds CSS class '.listening' to #voice-search-btn (pulsing red animation)
+          +---> Adds CSS class '.voice-active' to #global-search-input (red glow)
+          |
+User Speaks: "Solo Leveling" (or speaks studio / genre)
+          |
+          v (onresult event: interim & final transcripts)
+[js/speech.js: onresult handler]
+          |
+          v (streams text into input field)
+[index.html: #global-search-input.value = "Solo Leveling"]
+          |
+          v (dispatches 'input' event)
+[js/router.js: input listener]
+          |
+          v (executes search query)
+[js/data.js: searchAnime("Solo Leveling")]
+          |
+          v (filters 130 anime dataset)
+Returns Matching Anime Array
+          |
+          v (generates HTML thumbnail cards)
+[index.html: #search-results-dropdown] <--- Displays top matching anime with posters & ratings!
+          |
+User Clicks Result Item
+          |
+          v
+[js/router.js: openAnimeModal(animeId)] <--- Launches 3D detail modal!
+
+
+----------------------------------------------------------------------------------------------------
+5.2 Flow 2: Saitama HelpBot Voice & Conversational Assistant Flow
+----------------------------------------------------------------------------------------------------
+
+User Clicks Floating Saitama Avatar (or Mic 🎙️ Button)
+          |
+          v
+[js/saitama.js: SaitamaAssistant]
+          |
+          +---> [Toggles Speech Card]: Pure white high-contrast card appears
+          |
+User Clicks Action Chip OR Speaks via Mic 🎙️
+          |
+          +---[ Option A: User clicks "🔥 HYPE ACTION" ]
+          |         |
+          |         v
+          |   Picks top action anime (e.g. Solo Leveling / Jujutsu Kaisen)
+          |   Plays Kamehameha sound FX (js/audio.js)
+          |   Injects recommendation + mini poster card into chat stream
+          |
+          +---[ Option B: User clicks "🌸 CHILL SLICE OF LIFE" ]
+          |         |
+          |         v
+          |   Picks healing anime (e.g. Frieren / Bocchi the Rock!)
+          |   Plays Sakura wind sound FX
+          |   Injects therapeutic message into chat stream
+          |
+          +---[ Option C: User clicks "🥊 ONE PUNCH PICK" ]
+          |         |
+          |         v
+          |   Calculates highest ML predicted anime (e.g. Vinland Saga 98.4%)
+          |   Plays Serious Punch sound FX
+          |   Renders direct "💥 Unleash Serious Punch on Screen!" button
+          |
+          +---[ Option D: User speaks / types custom inquiry ]
+                    |
+                    v
+              [js/speech.js: startHelpBotListening()]
+                    |
+                    v (Speech transcript captured)
+              [js/saitama.js: handleUserQuery(query)]
+                    |
+                    +---> If "Serious Punch"    ==> Triggers js/moves.js: serious_punch
+                    +---> If "Explain ML"       ==> Explains Sigmoid formula + link to #ml-studio
+                    +---> If "Mystery Anime"    ==> Recommends Death Note / Steins;Gate
+                    +---> If "Take to Admin"    ==> Navigates router to #admin
+                    +---> If anime name         ==> Embeds interactive card with "VIEW" button
+
+
+----------------------------------------------------------------------------------------------------
+5.3 Flow 3: 3D Category Cube & Gyroscope Navigation Flow
+----------------------------------------------------------------------------------------------------
+
+User Drags 3D Cube Face OR Swipes Circular Orbit Ring (Gyroscope Dial)
+          |
+          v
+[js/cube-nav.js: Category3DCube]
+          |
+          v (tracks pointer coordinates: deltaX, deltaY)
+Calculates 3D Rotation Angles:
+  currentRotY += deltaX * sensitivity
+  currentRotX -= deltaY * sensitivity
+          |
+          v (applies CSS 3D transform)
+[css/cube.css: .cube-3d { transform: rotateX(...) rotateY(...); }]
+          |
+Snaps to Nearest Category Face:
+  e.g., Target Face = "Winter Season" (category/winter)
+          |
+          v (triggers navigation)
+[js/router.js: navigateTo('category/winter')]
+          |
+          +---> [1. Manga Ink Transition]: Old page bursts into monochrome Halftone dots (WebGL)
+          +---> [2. Audio Clack]: Procedural cube gyroscope click sound plays (js/audio.js)
+          +---> [3. Category Theme]: Body class set to '.theme-winter' (Glacial blue glow)
+          +---> [4. 3D Poster Carousel]: Loads 10 winter anime in cylindrical 3D carousel
+          +---> [5. Catalog Grid]: Renders curated winter anime cards below carousel
+
+
+----------------------------------------------------------------------------------------------------
+5.4 Flow 4: Signature Attack Dojo & Video-to-3D Shader Pipeline Flow
+----------------------------------------------------------------------------------------------------
+
+User Triggers Attack (via Dojo Menu, Anime Modal, or Saitama Voice Command)
+          |
+          v
+[js/moves.js: movesEngine.trigger(moveName)]
+          |
+          +---> [Step 1: Web Audio Synthesis (js/audio.js)]
+          |        - Waveshaper overdrive distortion
+          |        - Sub-bass boom (50 Hz ramp down to 20 Hz)
+          |        - High-frequency Ki charge oscillations
+          |
+          +---> [Step 2: Fullscreen Canvas Particle Overlay (js/moves.js)]
+          |        - Screen shake matrix applied to viewport
+          |        - Procedural particle beams, shockwaves, Kanji banners
+          |
+          +---> [Step 3: Video-to-3D Shader Pipeline (js/video-shader-pipeline.js)]
+                   |
+                   v
+          Hidden HTML5 Video Element:
+          <video src="..." autoplay muted loop playsinline style="display:none">
+                   |
+                   v (binds video frames at 60 FPS)
+          THREE.VideoTexture(videoElement)
+                   |
+                   v (mapped to Three.js 3D meshes & billboards)
+          Emissive Curved Mesh in 3D Space (No dropped frames!)
+                   |
+                   v
+          User witnesses authentic anime battle sequence projected in 3D!
+
+
+----------------------------------------------------------------------------------------------------
+5.5 Flow 5: Dynamic "Manga Ink" Transition Shader Flow
+----------------------------------------------------------------------------------------------------
+
+User Clicks Category Link or Hash Route Changes
+          |
+          v
+[js/manga-transition.js: mangaTransition.transitionTo(targetCallback)]
+          |
+          v (captures snapshot of current viewport)
+HTML2Canvas / WebGL Canvas Snapshot
+          |
+          v (passes image texture to custom GLSL Fragment Shader)
+GLSL Fragment Shader Dissolve Calculation:
+  - Samples screen pixels
+  - Applies Halftone Screentone Frequency Function: sin(uv.x * dots) * cos(uv.y * dots)
+  - Blends Sumi-e black ink splatter mask
+          |
+          v
+Screen dissolves outward into dynamic manga screentone dots!
+          |
+          v (executes view update callback)
+[js/router.js: injects new page HTML into #app-content]
+          |
+          v (fades shader overlay back to transparency)
+New Anime List resolves cleanly into view!
+
+
+----------------------------------------------------------------------------------------------------
+5.6 Flow 6: Logistic Regression Machine Learning Popularity Engine Flow
+----------------------------------------------------------------------------------------------------
+
+Server Initialization or POST /api/ml/predict Call
+          |
+          v
+[server/ml.js: LogisticRegressionModel]
+          |
+          v (extracts 130 anime dataset from database.json)
+Dataset Feature Matrix:
+  - x1: MyAnimeList Rating (e.g. 9.1)
+  - x2: Members Count (e.g. 1,450,000)
+  - x3: Favorites Count (e.g. 88,000)
+  - x4: Studio Prestige Score (MAPPA/Madhouse/Ufotable = 1.0, etc.)
+  - x5: Release Year Recency
+          |
+          v (Z-Score Normalization)
+x_norm = (x - mean) / standard_deviation
+          |
+          v (Linear Hypothesis)
+z = w1*x1_norm + w2*x2_norm + w3*x3_norm + w4*x4_norm + w5*x5_norm + bias
+          |
+          v (Sigmoid Activation Function)
+          1
+P(Hit) = ------
+         1 + e^-z
+          |
+          +---> If P >= 0.50 ==> Predicted "BLOCKBUSTER HIT" (Class 1)
+          +---> If P <  0.50 ==> Predicted "NICHE / CULT GEM" (Class 0)
+          |
+          v
+Returned to Client & Visualized in #ml-studio with interactive Sigmoid S-Curve!
+
+
+----------------------------------------------------------------------------------------------------
+5.7 Flow 7: Full-Stack Authentication, Favorites Vault & Admin Panel Flow
+----------------------------------------------------------------------------------------------------
+
+User Registers or Logs In via Auth Modal
+          |
+          v
+[js/auth-ui.js] ---> POST /api/auth/login ---> [server/index.js]
+                                                     |
+                                                     v (verifies credentials)
+                                               [server/db.js]
+                                                     |
+                                                     v (generates JWT token)
+Client Receives JWT Token & User Profile
+          |
+          v
+Stored in localStorage: 'nexus_token', 'nexus_user'
+          |
+          v
+[js/auth-ui.js: updateHeaderUserSlot()]
+  - Header updates: Displays user avatar badge, Hero Rank (e.g. "Rank S"), and Logout button
+  - If role === 'admin' -> Unlocks 👑 Admin Panel button
+          |
+User Clicks Favorite Heart ❤️ on Any Anime Card
+          |
+          v
+[js/api.js: toggleFavorite(animeId)]
+          |
+          +---> Client updates heart icon immediately (optimistic UI)
+          +---> POST /api/favorites/toggle sent to server
+          +---> server/db.js updates user's favorites array in database.json
+          |
+User Opens #favorites View
+          |
+          v
+[js/router.js: renderFavorites()]
+  - Retrieves saved anime IDs from backend
+  - Renders personalized Favorites Vault grid!
+          |
+Admin Opens #admin View
+          |
+          v
+[js/router.js: renderAdmin()]
+  - Displays aggregate analytics (Total Anime: 130, Total Users, Favorites)
+  - Displays full CRUD Table: Add new anime, edit ratings, delete entries in real time!
+
+
+====================================================================================================
+6. QUICK RUN GUIDE & DEFAULT CREDENTIALS
+====================================================================================================
+
+1. How to Start the Server:
+   Open a terminal in the project root directory and run:
+     node server/index.js
+
+   Console Output will confirm:
+     ==================================================
+     ⚡ ANIME NEXUS FULL STACK SERVER ONLINE!
+     📡 URL: http://localhost:3000
+     🤖 Logistic Regression ML Model: TRAINED & READY
+     ==================================================
+
+2. Access the Application in Any Browser:
+   Open: http://localhost:3000
+
+3. Built-in Test Accounts:
+   -----------------------------------------------------------------
+   ROLE          EMAIL                     PASSWORD       PERMISSIONS
+   -----------------------------------------------------------------
+   Administrator admin@animenexus.io       admin123       Full Admin Panel, Catalog CRUD, User Registry
+   Hero User     saitama@hero.com          punch123       Favorites Vault, Custom Profile, Hero Rank S
+   -----------------------------------------------------------------
+   (Or click "Register" in the top-right header to create your own account!)
+
+4. Voice Recognition (Speech-to-Text) Tips:
+   - Click the 🎙️ button inside the Search Bar to speak anime names, studios, or categories.
+   - Click the 🎙️ button inside the Saitama HelpBot card to talk directly to Saitama.
+   - If your microphone is not connected or permissions are denied, the system automatically 
+     runs an animated simulation demo so you can experience voice features in any environment!
+
+====================================================================================================
+                             END OF ANIME NEXUS MANUAL GUIDE
+====================================================================================================

@@ -1,0 +1,27 @@
+{
+  "name": "anime-nexus-recommendations",
+  "version": "2.0.0",
+  "description": "Full Stack Anime Recommendation System featuring 3D anime signature attacks (Kamehameha, Serious Punch), interactive Saitama assistant, Admin Panel, User Panel, Favorites, and Authentication.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "dev": "node server/index.js",
+    "static": "npx serve ."
+  },
+  "keywords": [
+    "anime",
+    "recommendations",
+    "fullstack",
+    "admin-panel",
+    "user-panel",
+    "auth",
+    "favorites",
+    "threejs",
+    "webgl",
+    "saitama",
+    "kamehameha"
+  ],
+  "author": "Antigravity AI",
+  "license": "MIT"
+}

@@ -1,0 +1,428 @@
+/* ==========================================================================
+   Anime Nexus - 3D Signature Moves & Video Arena Overlay Styles
+   ========================================================================== */
+
+/* Full-Screen Signature Attack Canvas Overlay */
+.signature-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  pointer-events: all;
+  background: #000000;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.signature-overlay.hidden {
+  display: none;
+}
+
+.signature-overlay.fading-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#signature-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+/* Speed Lines Overlay */
+.move-speed-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 30%, rgba(255, 255, 255, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.move-speed-lines.active {
+  opacity: 1;
+  animation: speedlines-shake 0.08s infinite alternate;
+}
+
+@keyframes speedlines-shake {
+  0% { transform: scale(1) translate(2px, -2px); }
+  50% { transform: scale(1.02) translate(-3px, 2px); }
+  100% { transform: scale(0.99) translate(1px, -1px); }
+}
+
+/* Blinding White Impact Flash */
+.move-impact-flash {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
+}
+
+.move-impact-flash.active {
+  opacity: 0.95;
+}
+
+/* Screen Shatter Glass Effect */
+.move-screen-shatter {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 50% 50%, transparent 15%, rgba(0, 0, 0, 0.4) 80%),
+    repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255, 255, 255, 0.2) 32px, transparent 34px),
+    repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(255, 255, 255, 0.2) 32px, transparent 34px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.move-screen-shatter.active {
+  opacity: 1;
+  animation: shatter-shake 0.15s 2;
+}
+
+@keyframes shatter-shake {
+  0% { transform: scale(1.05) rotate(0.5deg); }
+  50% { transform: scale(0.96) rotate(-0.5deg); }
+  100% { transform: scale(1); }
+}
+
+/* Cinematic Anime Typography Banner */
+.move-banner-container {
+  position: absolute;
+  bottom: 12%;
+  left: 5%;
+  right: 5%;
+  z-index: 40;
+  text-align: center;
+  pointer-events: none;
+  animation: banner-surge 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes banner-surge {
+  from { opacity: 0; transform: translateY(40px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.move-japanese-kanji {
+  font-family: var(--font-jp);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fbbf24;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 25px rgba(251, 191, 36, 0.8), 0 0 50px rgba(239, 68, 68, 0.8);
+  margin-bottom: 0.25rem;
+}
+
+.move-title {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.9), 0 0 60px rgba(37, 99, 235, 0.8);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.mode-serious_punch .move-title {
+  color: #fee2e2;
+  text-shadow: 0 0 35px rgba(239, 68, 68, 1), 0 0 70px rgba(185, 28, 28, 0.9);
+}
+
+.mode-sakura_blossom .move-title {
+  color: #fdf2f8;
+  text-shadow: 0 0 35px rgba(244, 114, 182, 1), 0 0 70px rgba(236, 72, 153, 0.9);
+}
+
+.mode-domain_expansion .move-title {
+  color: #ede9fe;
+  text-shadow: 0 0 35px rgba(167, 139, 250, 1), 0 0 70px rgba(109, 40, 217, 0.9);
+}
+
+.move-subtitle {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.move-quote {
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #e2e8f0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Skip Move Button */
+.move-skip-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--border-accent);
+  color: #ffffff;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-fast);
+}
+
+.move-skip-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Video into 3D Website Version Arena
+   ========================================================================== */
+
+.video-3d-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  background: #040711;
+  overflow: hidden;
+}
+
+.video-3d-overlay.hidden {
+  display: none;
+}
+
+.video-3d-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(30, 58, 138, 0.15) 0%, #040711 80%);
+  pointer-events: none;
+}
+
+/* HUD Top Header */
+.video-3d-hud-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  background: rgba(7, 10, 20, 0.85);
+  backdrop-filter: blur(20px);
+}
+
+.hud-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.hud-pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #ef4444;
+  animation: pulse-red 1.2s infinite;
+}
+
+@keyframes pulse-red {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.hud-brand strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.hud-tag {
+  font-size: 0.72rem;
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--accent-cyan);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.video-3d-close-btn {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.video-3d-close-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+/* 3D Viewport */
+.video-3d-viewport-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.video-3d-viewport-wrapper:active {
+  cursor: grabbing;
+}
+
+#video-3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.video-3d-instructions {
+  position: absolute;
+  top: 1.5rem;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid var(--border-accent);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  color: var(--accent-cyan);
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+/* Live Telemetry Grid */
+.video-3d-telemetry {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 1rem 2.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-top: 1px solid var(--border-subtle);
+  backdrop-filter: blur(15px);
+}
+
+.telemetry-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.t-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.t-val {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.text-cyan { color: #38bdf8 !important; }
+.text-red { color: #ef4444 !important; }
+.text-emerald { color: #10b981 !important; }
+
+/* Bottom Dock & Controls */
+.video-3d-controls-dock {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: #090e1c;
+  border-top: 1px solid var(--border-accent);
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.control-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+
+.move-selector-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.pill-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.pill-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.pill-btn.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(37, 99, 235, 0.3) 100%);
+  border-color: var(--accent-cyan);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.blast-3d-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+  transition: var(--transition-smooth);
+}
+
+.blast-3d-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
+}
+
+@media (max-width: 900px) {
+  .move-title { font-size: 2.8rem; }
+  .video-3d-telemetry { grid-template-columns: 1fr 1fr; }
+  .video-3d-controls-dock { flex-direction: column; align-items: stretch; }
+}

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Nexus | Full Stack Recommendation System, AI Logistic Regression & 3D Moves</title>
+  <meta name="description" content="Next-Gen Full Stack Anime Recommendation Platform featuring Logistic Regression popularity prediction, 3D anime signature attack moves (Kamehameha, Serious Punch), interactive Saitama hero assistant, Admin Panel, and Favorites Vault.">
+  <meta name="theme-color" content="#07090e">
+
+  <!-- Favicon / Emoji Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/signature-moves.css">
+  <link rel="stylesheet" href="css/saitama.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/favorites.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/ml.css">
+  <link rel="stylesheet" href="css/cube.css">
+  <link rel="stylesheet" href="css/category-themes.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <!-- Three.js 3D Graphics Library for Video-to-3D Shader Pipeline -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Hidden HTML5 Video Pipeline Sources for 3D Emissive & Particle Billboard Projection -->
+  <div id="video-shader-sources" style="display: none;" aria-hidden="true">
+    <video id="video-source-kamehameha" autoplay muted loop playsinline style="display: none;"></video>
+    <video id="video-source-serious_punch" autoplay muted loop playsinline style="display: none;"></video>
+    <video id="video-source-domain_expansion" autoplay muted loop playsinline style="display: none;"></video>
+    <video id="video-source-sakura_blossom" autoplay muted loop playsinline style="display: none;"></video>
+    <video id="video-source-solar_flare" autoplay muted loop playsinline style="display: none;"></video>
+    <video id="video-source-ice_glaciation" autoplay muted loop playsinline style="display: none;"></video>
+  </div>
+
+  <!-- Manga Ink Transition WebGL Canvas Overlay -->
+  <canvas id="manga-transition-canvas" class="manga-transition-canvas" style="position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; display: none;"></canvas>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="app-header">
+    <div class="header-container">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="brand-logo" data-route="home">
+        <div class="logo-symbol">⚡</div>
+        <div class="logo-text-group">
+          <span class="logo-title">ANIME<span class="gradient-text">NEXUS</span></span>
+          <span class="logo-sub">AI & FULL STACK PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav class="nav-menu">
+        <a href="#home" class="nav-link active" data-route="home">Home</a>
+
+        <!-- 1. GENRES DROPDOWN -->
+        <div class="nav-item-dropdown">
+          <button class="nav-link nav-dropdown-trigger">
+            <span>Genres</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="#category/slice-of-life" class="dropdown-item" data-route="category" data-param="slice-of-life">
+              <span>🌸 Slice of Life</span>
+              <small>日常系</small>
+            </a>
+            <a href="#category/mystery" class="dropdown-item" data-route="category" data-param="mystery">
+              <span>🔮 Mystery & Thriller</span>
+              <small>ミステリー</small>
+            </a>
+            <a href="#category/action" class="dropdown-item" data-route="category" data-param="action">
+              <span>⚡ Action & Battle</span>
+              <small>バトル</small>
+            </a>
+            <a href="#category/romance" class="dropdown-item" data-route="category" data-param="romance">
+              <span>💖 Romance</span>
+              <small>恋愛</small>
+            </a>
+          </div>
+        </div>
+
+        <!-- 2. SEASONS DROPDOWN -->
+        <div class="nav-item-dropdown">
+          <button class="nav-link nav-dropdown-trigger">
+            <span>Seasons</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="#category/spring" class="dropdown-item" data-route="category" data-param="spring">
+              <span>🌱 Spring (Haru)</span>
+              <small>春の季節</small>
+            </a>
+            <a href="#category/summer" class="dropdown-item" data-route="category" data-param="summer">
+              <span>☀️ Summer (Natsu)</span>
+              <small>夏の季節</small>
+            </a>
+            <a href="#category/autumn" class="dropdown-item" data-route="category" data-param="autumn">
+              <span>🍂 Autumn (Aki)</span>
+              <small>秋の季節</small>
+            </a>
+            <a href="#category/winter" class="dropdown-item" data-route="category" data-param="winter">
+              <span>❄️ Winter (Fuyu)</span>
+              <small>冬の季節</small>
+            </a>
+          </div>
+        </div>
+
+        <!-- 3. AGE / DEMOGRAPHICS DROPDOWN -->
+        <div class="nav-item-dropdown">
+          <button class="nav-link nav-dropdown-trigger">
+            <span>Demographics</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="#category/shounen" class="dropdown-item" data-route="category" data-param="shounen">
+              <span>🔥 Shounen</span>
+              <small>少年</small>
+            </a>
+            <a href="#category/shoujo" class="dropdown-item" data-route="category" data-param="shoujo">
+              <span>✨ Shoujo</span>
+              <small>少女</small>
+            </a>
+            <a href="#category/kodomo" class="dropdown-item" data-route="category" data-param="kodomo">
+              <span>🎈 Kodomo</span>
+              <small>子供</small>
+            </a>
+            <a href="#category/seinen" class="dropdown-item" data-route="category" data-param="seinen">
+              <span>⚔️ Seinen</span>
+              <small>青年</small>
+            </a>
+            <a href="#category/josei" class="dropdown-item" data-route="category" data-param="josei">
+              <span>🍷 Josei</span>
+              <small>女性</small>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4. SIGNATURE ATTACKS DOJO -->
+        <div class="nav-item-dropdown">
+          <button class="nav-link nav-dropdown-trigger" style="color: #fca5a5;">
+            <span>💥 Attacks Dojo</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="#" class="dropdown-item" data-trigger-move="kamehameha">
+              <span>⚡ Kamehameha</span>
+              <small>Dragon Ball</small>
+            </a>
+            <a href="#" class="dropdown-item" data-trigger-move="serious_punch">
+              <span>🥊 Serious Punch</span>
+              <small>One Punch Man</small>
+            </a>
+            <a href="#" class="dropdown-item" data-trigger-move="sakura_blossom">
+              <span>🌸 Sakura Vortex</span>
+              <small>Slice of Life</small>
+            </a>
+            <a href="#" class="dropdown-item" data-trigger-move="domain_expansion">
+              <span>🔮 Domain Expansion</span>
+              <small>Jujutsu Kaisen</small>
+            </a>
+            <a href="#" class="dropdown-item" data-trigger-move="solar_flare">
+              <span>🔥 Solar Flare</span>
+              <small>Summer Heat</small>
+            </a>
+            <a href="#" class="dropdown-item" data-trigger-move="ice_glaciation">
+              <span>❄️ Ice Glaciation</span>
+              <small>Winter Frost</small>
+            </a>
+          </div>
+        </div>
+
+        <!-- 5. ML STUDIO DIRECT LINK -->
+        <a href="#ml-studio" class="nav-link" data-route="ml-studio" style="color: #38bdf8;">
+          <span>🤖 ML Studio</span>
+        </a>
+
+        <!-- 6. FAVORITES DIRECT LINK -->
+        <a href="#favorites" class="nav-link" data-route="favorites">❤️ Favorites</a>
+
+        <!-- 7. ADMIN DIRECT LINK -->
+        <a href="#admin" class="nav-link" data-route="admin" style="color: #fbbf24;">👑 Admin</a>
+      </nav>
+
+      <!-- Header Utilities (Search, 3D Arena, Audio, User Auth Slot, Hamburger) -->
+      <div class="header-actions">
+        <!-- Live Instant Search -->
+        <div class="search-wrapper">
+          <span class="search-icon-svg">🔍</span>
+          <input 
+            type="text" 
+            id="global-search-input" 
+            class="search-input" 
+            placeholder="Search anime, studios, moves..." 
+            autocomplete="off"
+          />
+          <button id="voice-search-btn" class="voice-search-btn" type="button" title="Speak to Search (Speech-to-Text)" aria-label="Voice Search">🎙️</button>
+          <div id="search-results-dropdown" class="search-results-dropdown hidden"></div>
+        </div>
+
+        <!-- 3D Arena Launcher Button -->
+        <button class="arena-nav-btn" id="nav-arena-btn" title="Open 3D Battle Arena & Video Mesh">
+          <span>🥋</span>
+          <span>3D ARENA</span>
+        </button>
+
+        <!-- Procedural Web Audio Sound Toggle -->
+        <button class="audio-btn" id="audio-toggle-btn" title="Toggle Anime Sound Effects">
+          <span class="audio-icon">🔊</span>
+          <span class="audio-text">Sound ON</span>
+        </button>
+
+        <!-- USER / AUTH SLOT (Dynamically rendered by AuthAndPanelsUI) -->
+        <div id="header-user-slot"></div>
+
+        <!-- Mobile Drawer Hamburger -->
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Navigation Menu">
+          ☰
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE NAVIGATION DRAWER ==================== -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <strong class="gradient-text">NAVIGATION</strong>
+      <button class="drawer-close" id="mobile-drawer-close">&times;</button>
+    </div>
+    
+    <div class="drawer-links">
+      <a href="#home" class="drawer-link" data-route="home">🏠 Home Dashboard</a>
+      <a href="#ml-studio" class="drawer-link" data-route="ml-studio" style="color: #38bdf8;">🤖 ML Popularity Studio</a>
+      <a href="#favorites" class="drawer-link" data-route="favorites">❤️ My Favorites</a>
+      <a href="#profile" class="drawer-link" data-route="profile">👤 Hero Profile</a>
+      <a href="#admin" class="drawer-link" data-route="admin" style="color: #fbbf24;">👑 Admin Panel</a>
+
+      <div class="drawer-group-title">GENRES</div>
+      <a href="#category/slice-of-life" class="drawer-link" data-route="category" data-param="slice-of-life">🌸 Slice of Life</a>
+      <a href="#category/mystery" class="drawer-link" data-route="category" data-param="mystery">🔮 Mystery & Thriller</a>
+      <a href="#category/action" class="drawer-link" data-route="category" data-param="action">⚡ Action & Battle</a>
+      <a href="#category/romance" class="drawer-link" data-route="category" data-param="romance">💖 Romance</a>
+
+      <div class="drawer-group-title">SEASONS</div>
+      <a href="#category/spring" class="drawer-link" data-route="category" data-param="spring">🌱 Spring Season</a>
+      <a href="#category/summer" class="drawer-link" data-route="category" data-param="summer">☀️ Summer Season</a>
+      <a href="#category/autumn" class="drawer-link" data-route="category" data-param="autumn">🍂 Autumn Season</a>
+      <a href="#category/winter" class="drawer-link" data-route="category" data-param="winter">❄️ Winter Season</a>
+
+      <div class="drawer-group-title">AGE / DEMOGRAPHICS</div>
+      <a href="#category/shounen" class="drawer-link" data-route="category" data-param="shounen">🔥 Shounen (少年)</a>
+      <a href="#category/shoujo" class="drawer-link" data-route="category" data-param="shoujo">✨ Shoujo (少女)</a>
+      <a href="#category/kodomo" class="drawer-link" data-route="category" data-param="kodomo">🎈 Kodomo (子供)</a>
+      <a href="#category/seinen" class="drawer-link" data-route="category" data-param="seinen">⚔️ Seinen (青年)</a>
+      <a href="#category/josei" class="drawer-link" data-route="category" data-param="josei">🍷 Josei (女性)</a>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN DYNAMIC CONTENT CONTAINER ==================== -->
+  <main id="app-content">
+    <!-- Router injects views here dynamically -->
+  </main>
+
+  <!-- ==================== ANIME DETAIL FULL MODAL ==================== -->
+  <div id="anime-detail-modal" class="anime-modal-overlay hidden">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close Modal">&times;</button>
+      <div class="modal-body" id="modal-content-body">
+        <!-- Injected dynamically by router -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <strong class="logo-title">ANIME<span class="gradient-text">NEXUS</span></strong>
+        <p class="footer-text">
+          Full Stack Architecture: Node.js REST API, Logistic Regression ML, SQLite/JSON Storage, JWT Authentication, 3D Canvas Attacks, User & Admin Panels.
+        </p>
+      </div>
+
+      <div class="footer-tags">
+        <span class="f-tag">🤖 Logistic Regression</span>
+        <span class="f-tag">⚡ Kamehameha</span>
+        <span class="f-tag">🥊 Serious Punch</span>
+        <span class="f-tag">👑 Admin Command</span>
+        <span class="f-tag">❤️ Favorites Vault</span>
+        <span class="f-tag">⭐ 130 Curated Anime</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Entrypoint -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

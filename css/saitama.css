@@ -1,0 +1,546 @@
+/* ==========================================================================
+   Anime Nexus - Saitama Interactive Hero Assistant & HelpBot Styles
+   Matches Reference UI:
+   - Floating circular Saitama avatar badge with radiant yellow aura glow
+   - Pure white dialog card with high-contrast bold typography
+   - Pill chips: 🔥 HYPE ACTION, 🌸 CHILL SLICE OF LIFE, 🥊 ONE PUNCH PICK
+   - Expandable conversational AI assistant & speech-to-text voice recognition
+   ========================================================================== */
+
+.saitama-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Speech Card (Matches Uploaded Screenshot)
+   ========================================================================== */
+
+.saitama-card {
+  width: 360px;
+  max-width: calc(100vw - 2.5rem);
+  background: #ffffff;
+  color: #0b0f19;
+  border-radius: 20px;
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1.1rem;
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.55),
+    0 6px 18px rgba(0, 0, 0, 0.15),
+    0 0 1px rgba(0, 0, 0, 0.2);
+  position: relative;
+  pointer-events: all;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.saitama-card.collapsed {
+  opacity: 0;
+  transform: translateY(15px) scale(0.92);
+  pointer-events: none;
+  display: none;
+}
+
+/* Speech Bubble Tail pointing to circular avatar */
+.saitama-card::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  right: 42px;
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
+  transform: rotate(45deg);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.08);
+  border-bottom-right-radius: 4px;
+}
+
+/* Card Close / Minimize Button */
+.saitama-card-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.85rem;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: #64748b;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.saitama-card-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+}
+
+/* Main Speech Text Prompt (Bold High-Contrast Headline) */
+.saitama-speech-header {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.35;
+  margin-bottom: 0.95rem;
+  padding-right: 1.6rem;
+  letter-spacing: -0.015em;
+}
+
+/* ==========================================================================
+   Iconic Action Chips (Screenshot Style)
+   ========================================================================== */
+
+.saitama-chips-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+.saitama-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.62rem 1.25rem;
+  border-radius: 9999px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, filter 0.18s ease;
+  user-select: none;
+}
+
+.saitama-chip:hover {
+  transform: translateX(4px) scale(1.01);
+}
+
+.saitama-chip:active {
+  transform: scale(0.98);
+}
+
+.chip-emoji {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* 1. HYPE ACTION & 2. CHILL SLICE OF LIFE (Black with Cyan / Teal Neon Border) */
+.chip-action,
+.chip-sol {
+  background: #000000;
+  color: #ffffff;
+  border: 2.2px solid #00f0ff;
+  box-shadow: 0 4px 14px rgba(0, 240, 255, 0.22);
+}
+
+.chip-action:hover,
+.chip-sol:hover {
+  box-shadow: 0 6px 18px rgba(0, 240, 255, 0.45);
+  border-color: #38bdf8;
+}
+
+/* 3. ONE PUNCH PICK (Solid Hot Magenta / Pink) */
+.chip-punch {
+  background: #ff2a85;
+  color: #ffffff;
+  border: 2.2px solid #ff2a85;
+  box-shadow: 0 4px 14px rgba(255, 42, 133, 0.35);
+}
+
+.chip-punch:hover {
+  box-shadow: 0 6px 20px rgba(255, 42, 133, 0.55);
+  filter: brightness(1.06);
+}
+
+/* ==========================================================================
+   Chat Expansion Bar & AI Assistant Drawer
+   ========================================================================== */
+
+.saitama-toggle-chat-btn {
+  background: transparent;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  margin-top: 0.35rem;
+}
+
+.saitama-toggle-chat-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.saitama-chat-drawer {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.saitama-chat-drawer.hidden {
+  display: none;
+}
+
+.saitama-chat-stream {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+
+/* Custom scrollbar for chat */
+.saitama-chat-stream::-webkit-scrollbar {
+  width: 4px;
+}
+.saitama-chat-stream::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.saitama-msg {
+  padding: 0.55rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  max-width: 90%;
+  word-break: break-word;
+}
+
+.saitama-msg.bot {
+  background: #f1f5f9;
+  color: #0f172a;
+  align-self: flex-start;
+  border-left: 3px solid #facc15;
+}
+
+.saitama-msg.user {
+  background: #0f172a;
+  color: #ffffff;
+  align-self: flex-end;
+  border-radius: 12px 12px 2px 12px;
+}
+
+/* In-Chat Anime Embed Card */
+.saitama-anime-embed {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  margin-top: 0.4rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.saitama-embed-poster {
+  width: 38px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.saitama-embed-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.saitama-embed-title {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saitama-embed-sub {
+  font-size: 0.7rem;
+  color: #64748b;
+  margin-top: 0.1rem;
+}
+
+.saitama-embed-btn {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.saitama-embed-btn:hover {
+  background: #2563eb;
+}
+
+/* Input Bar with Text, Mic and Send */
+.saitama-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9999px;
+  padding: 0.25rem 0.4rem 0.25rem 0.85rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.saitama-input-bar:focus-within {
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+  background: #ffffff;
+}
+
+.saitama-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.82rem;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.saitama-input.voice-active {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Speech-to-Text Mic Button */
+.saitama-mic-btn {
+  background: #e2e8f0;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #334155;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.saitama-mic-btn:hover {
+  background: #cbd5e1;
+  transform: scale(1.1);
+}
+
+.saitama-mic-btn.listening {
+  background: #ef4444;
+  color: #ffffff;
+  animation: saitama-mic-ring 1s infinite alternate;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
+}
+
+@keyframes saitama-mic-ring {
+  0% { transform: scale(1); filter: drop-shadow(0 0 4px #ef4444); }
+  100% { transform: scale(1.22); filter: drop-shadow(0 0 14px #ef4444); }
+}
+
+.saitama-send-btn {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.saitama-send-btn:hover {
+  background: #2563eb;
+  transform: scale(1.08);
+}
+
+/* Quick Suggestion Pills */
+.saitama-quick-suggs {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.saitama-sugg-pill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.saitama-sugg-pill:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   Circular Saitama Avatar Badge with Radiant Yellow Aura Glow
+   (Exact Match to Screenshot)
+   ========================================================================== */
+
+.saitama-badge-btn {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saitama-badge-btn:hover {
+  transform: scale(1.1) translateY(-4px);
+}
+
+.saitama-badge-btn:active {
+  transform: scale(0.96);
+}
+
+/* Radiant Golden-Yellow Glowing Aura (matches the screenshot) */
+.saitama-aura-wrapper {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 0 25px rgba(250, 204, 21, 0.95),
+    0 0 50px rgba(234, 179, 8, 0.65),
+    0 0 75px rgba(202, 138, 4, 0.35);
+  animation: saitama-aura-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes saitama-aura-glow {
+  0% {
+    box-shadow: 
+      0 0 22px rgba(250, 204, 21, 0.9),
+      0 0 45px rgba(234, 179, 8, 0.55);
+  }
+  100% {
+    box-shadow: 
+      0 0 35px rgba(250, 204, 21, 1),
+      0 0 65px rgba(234, 179, 8, 0.8),
+      0 0 90px rgba(202, 138, 4, 0.45);
+  }
+}
+
+.saitama-svg-avatar {
+  width: 86px;
+  height: 86px;
+  display: block;
+}
+
+/* Mini Help Badge Pill on the avatar */
+.saitama-help-pill {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  background: #ef4444;
+  color: #ffffff;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  animation: pulse-saitama-badge 1.8s infinite;
+  letter-spacing: 0.05em;
+}
+
+@keyframes pulse-saitama-badge {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .saitama-container {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+  .saitama-card {
+    width: 310px;
+    padding: 1.15rem 1.25rem;
+  }
+  .saitama-speech-header {
+    font-size: 0.95rem;
+  }
+  .saitama-chip {
+    font-size: 0.78rem;
+    padding: 0.55rem 1rem;
+  }
+  .saitama-badge-btn {
+    width: 76px;
+    height: 76px;
+  }
+  .saitama-aura-wrapper {
+    width: 72px;
+    height: 72px;
+  }
+  .saitama-svg-avatar {
+    width: 72px;
+    height: 72px;
+  }
+}

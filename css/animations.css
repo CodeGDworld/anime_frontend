@@ -1,0 +1,50 @@
+/* ==========================================================================
+   Anime Nexus - Keyframe Animations & FX Styles
+   ========================================================================== */
+
+@keyframes pulse-cyan {
+  0% { box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(56, 189, 248, 0.7); }
+  100% { box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+}
+
+@keyframes pulse-fire {
+  0% { filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
+  50% { filter: drop-shadow(0 0 18px rgba(245, 158, 11, 0.8)); }
+  100% { filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
+}
+
+@keyframes float-subtle {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.anim-float {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+.anim-spin {
+  animation: spin-slow 20s linear infinite;
+}
+
+.anim-fire {
+  animation: pulse-fire 2s infinite;
+}
+
+/* Manga Ink & Halftone Transition Canvas */
+.manga-transition-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999999;
+  display: none;
+  filter: contrast(120%);
+}

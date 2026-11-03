@@ -1,0 +1,383 @@
+/**
+ * Anime Nexus - Category Dynamic Backgrounds & User-Friendly Home Theme
+ * 
+ * 1. User-Friendly Home Background:
+ *    Warm, comfortable, modern dark-slate & indigo nebula aesthetic
+ *    that reduces eye strain and provides superior readability.
+ * 
+ * 2. 13 Category-Specific Dynamic Theming:
+ *    Automatically shifts the entire page background, hero glow,
+ *    and card ambiances to match the active anime category.
+ */
+
+/* ========================================================
+   1. USER-FRIENDLY HOME PAGE THEME (Default & .theme-home)
+   ======================================================== */
+
+body,
+body.theme-home {
+  background-color: #0c101d;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(56, 189, 248, 0.16) 0%, transparent 55%),
+    radial-gradient(circle at 10% 25%, rgba(99, 102, 241, 0.13) 0%, transparent 45%),
+    radial-gradient(circle at 90% 65%, rgba(236, 72, 153, 0.09) 0%, transparent 50%),
+    linear-gradient(180deg, #0e1424 0%, #0c101d 50%, #080c16 100%);
+  background-attachment: fixed;
+  transition: background 0.85s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.85s ease;
+}
+
+/* Home Section Glassmorphic Enhancements */
+.theme-home .hero-section {
+  background: radial-gradient(ellipse at 50% 20%, rgba(30, 41, 59, 0.4) 0%, transparent 70%);
+}
+
+.theme-home .moves-dojo-strip {
+  background: rgba(15, 23, 42, 0.65);
+  border-color: rgba(56, 189, 248, 0.2);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.theme-home .category-portal-card {
+  background: linear-gradient(165deg, rgba(20, 29, 47, 0.85) 0%, rgba(13, 19, 33, 0.9) 100%);
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================================
+   2. 13 CATEGORY DYNAMIC BACKGROUND PALETTES
+   ======================================================== */
+
+/* 1. SLICE OF LIFE (Healing Sakura Rose & Peach Twilight) */
+body.theme-slice-of-life {
+  background-color: #150d18;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(244, 114, 182, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(251, 146, 60, 0.13) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(236, 72, 153, 0.16) 0%, transparent 50%),
+    linear-gradient(180deg, #1a0f1e 0%, #130a16 50%, #0d060f 100%);
+  background-attachment: fixed;
+}
+body.theme-slice-of-life .app-header {
+  background: rgba(21, 13, 24, 0.88);
+  border-bottom-color: rgba(244, 114, 182, 0.25);
+}
+
+/* 2. MYSTERY & THRILLER (Enigmatic Obsidian Violet & Cyber Cyan) */
+body.theme-mystery {
+  background-color: #0b0716;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(139, 92, 246, 0.26) 0%, transparent 55%),
+    radial-gradient(circle at 20% 35%, rgba(6, 182, 212, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.20) 0%, transparent 50%),
+    linear-gradient(180deg, #120b22 0%, #0b0716 50%, #06040e 100%);
+  background-attachment: fixed;
+}
+body.theme-mystery .app-header {
+  background: rgba(12, 8, 24, 0.88);
+  border-bottom-color: rgba(139, 92, 246, 0.25);
+}
+
+/* 3. ACTION & BATTLE (Crimson Charcoal & Electric Ki Cyan) */
+body.theme-action {
+  background-color: #14070a;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(239, 68, 68, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(56, 189, 248, 0.17) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(220, 38, 38, 0.18) 0%, transparent 50%),
+    linear-gradient(180deg, #1c0a0e 0%, #130609 50%, #0c0305 100%);
+  background-attachment: fixed;
+}
+body.theme-action .app-header {
+  background: rgba(20, 7, 10, 0.88);
+  border-bottom-color: rgba(239, 68, 68, 0.25);
+}
+
+/* 4. ROMANCE (Velvet Twilight Wine & Rose Gold) */
+body.theme-romance {
+  background-color: #160815;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(236, 72, 153, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 20% 35%, rgba(244, 63, 94, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(192, 38, 211, 0.18) 0%, transparent 50%),
+    linear-gradient(180deg, #1f0b1e 0%, #150714 50%, #0e040e 100%);
+  background-attachment: fixed;
+}
+body.theme-romance .app-header {
+  background: rgba(22, 8, 21, 0.88);
+  border-bottom-color: rgba(236, 72, 153, 0.25);
+}
+
+/* 5. SPRING (Haru Renewal Mint & Cherry Blossom) */
+body.theme-spring {
+  background-color: #091410;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(16, 185, 129, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(244, 114, 182, 0.17) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(52, 211, 153, 0.15) 0%, transparent 50%),
+    linear-gradient(180deg, #0e1e17 0%, #091410 50%, #050d0a 100%);
+  background-attachment: fixed;
+}
+body.theme-spring .app-header {
+  background: rgba(10, 20, 16, 0.88);
+  border-bottom-color: rgba(16, 185, 129, 0.25);
+}
+
+/* 6. SUMMER (Sunburst Amber & Azure Ocean) */
+body.theme-summer {
+  background-color: #141108;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(245, 158, 11, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 20% 35%, rgba(14, 165, 233, 0.19) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.17) 0%, transparent 50%),
+    linear-gradient(180deg, #1e190b 0%, #141108 50%, #0d0a04 100%);
+  background-attachment: fixed;
+}
+body.theme-summer .app-header {
+  background: rgba(20, 17, 8, 0.88);
+  border-bottom-color: rgba(245, 158, 11, 0.25);
+}
+
+/* 7. AUTUMN (Crimson Maple Foliage & Burnt Amber) */
+body.theme-autumn {
+  background-color: #150a06;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(234, 88, 12, 0.25) 0%, transparent 55%),
+    radial-gradient(circle at 85% 30%, rgba(217, 119, 6, 0.19) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(185, 28, 28, 0.19) 0%, transparent 50%),
+    linear-gradient(180deg, #200f09 0%, #140905 50%, #0c0503 100%);
+  background-attachment: fixed;
+}
+body.theme-autumn .app-header {
+  background: rgba(21, 10, 6, 0.88);
+  border-bottom-color: rgba(234, 88, 12, 0.25);
+}
+
+/* 8. WINTER (Crystalline Glacial Arctic Cyan & Diamond Frost) */
+body.theme-winter {
+  background-color: #07101a;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(56, 189, 248, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 20% 30%, rgba(147, 197, 253, 0.17) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(2, 132, 199, 0.19) 0%, transparent 50%),
+    linear-gradient(180deg, #0c1827 0%, #07101a 50%, #040910 100%);
+  background-attachment: fixed;
+}
+body.theme-winter .app-header {
+  background: rgba(7, 16, 26, 0.88);
+  border-bottom-color: rgba(56, 189, 248, 0.25);
+}
+
+/* 9. SHOUNEN (Fiery Volcanic Warrior Flame) */
+body.theme-shounen {
+  background-color: #150804;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(249, 115, 22, 0.25) 0%, transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(239, 68, 68, 0.21) 0%, transparent 45%),
+    radial-gradient(circle at 15% 80%, rgba(234, 179, 8, 0.16) 0%, transparent 50%),
+    linear-gradient(180deg, #210d06 0%, #140704 50%, #0d0402 100%);
+  background-attachment: fixed;
+}
+body.theme-shounen .app-header {
+  background: rgba(21, 8, 4, 0.88);
+  border-bottom-color: rgba(249, 115, 22, 0.25);
+}
+
+/* 10. SHOUJO (Celestial Magical Starlight Lavender & Rose) */
+body.theme-shoujo {
+  background-color: #140918;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(192, 132, 252, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 20% 35%, rgba(244, 114, 182, 0.19) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.17) 0%, transparent 50%),
+    linear-gradient(180deg, #1f0e25 0%, #130817 50%, #0c040f 100%);
+  background-attachment: fixed;
+}
+body.theme-shoujo .app-header {
+  background: rgba(20, 9, 24, 0.88);
+  border-bottom-color: rgba(192, 132, 252, 0.25);
+}
+
+/* 11. KODOMO (Joyful Sunshine Gold & Sky Blue Wonder) */
+body.theme-kodomo {
+  background-color: #141207;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(234, 179, 8, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(56, 189, 248, 0.19) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(250, 204, 21, 0.17) 0%, transparent 50%),
+    linear-gradient(180deg, #1f1b0a 0%, #131106 50%, #0d0b04 100%);
+  background-attachment: fixed;
+}
+body.theme-kodomo .app-header {
+  background: rgba(20, 18, 7, 0.88);
+  border-bottom-color: rgba(234, 179, 8, 0.25);
+}
+
+/* 12. SEINEN (Atmospheric Cold Steel Slate & Gritty Charcoal) */
+body.theme-seinen {
+  background-color: #0b0e14;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(100, 116, 139, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 20% 35%, rgba(148, 163, 184, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(71, 85, 105, 0.19) 0%, transparent 50%),
+    linear-gradient(180deg, #111620 0%, #0b0e14 50%, #07090d 100%);
+  background-attachment: fixed;
+}
+body.theme-seinen .app-header {
+  background: rgba(11, 14, 20, 0.88);
+  border-bottom-color: rgba(100, 116, 139, 0.25);
+}
+
+/* 13. JOSEI (Sophisticated Velvet Orchid & Wine Plum) */
+body.theme-josei {
+  background-color: #130716;
+  background-image: 
+    radial-gradient(circle at 50% -5%, rgba(168, 85, 247, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 85% 30%, rgba(225, 29, 72, 0.17) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(147, 51, 234, 0.17) 0%, transparent 50%),
+    linear-gradient(180deg, #1d0b21 0%, #120615 50%, #0a030c 100%);
+  background-attachment: fixed;
+}
+body.theme-josei .app-header {
+  background: rgba(19, 7, 22, 0.88);
+  border-bottom-color: rgba(168, 85, 247, 0.25);
+}
+
+/* Utility Routes: Favorites, ML Studio, Admin */
+body.theme-favorites {
+  background-color: #150914;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(244, 63, 94, 0.22) 0%, transparent 50%),
+    linear-gradient(180deg, #1d0c1b 0%, #140813 100%);
+  background-attachment: fixed;
+}
+
+body.theme-ml-studio {
+  background-color: #081119;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25) 0%, transparent 55%),
+    linear-gradient(180deg, #0c1825 0%, #070f17 100%);
+  background-attachment: fixed;
+}
+
+body.theme-admin {
+  background-color: #141007;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.22) 0%, transparent 50%),
+    linear-gradient(180deg, #1e180a 0%, #130f06 100%);
+  background-attachment: fixed;
+}
+
+/* ========================================================
+   3. ANIME CARDS DYNAMIC CATEGORY ACCENT COLORS
+   ======================================================== */
+
+.anime-card {
+  position: relative;
+  background: linear-gradient(165deg, rgba(20, 27, 45, 0.85) 0%, var(--card-ambient, rgba(15, 23, 42, 0.88)) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.anime-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--card-accent, var(--accent-cyan));
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 25px var(--card-accent-glow, rgba(56, 189, 248, 0.35));
+}
+
+/* Individual Category Card Glows */
+.anime-card[data-category="slice-of-life"] {
+  --card-accent: #f472b6;
+  --card-accent-glow: rgba(244, 114, 182, 0.35);
+  --card-ambient: rgba(36, 18, 32, 0.85);
+}
+.anime-card[data-category="mystery"] {
+  --card-accent: #8b5cf6;
+  --card-accent-glow: rgba(139, 92, 246, 0.35);
+  --card-ambient: rgba(22, 15, 41, 0.85);
+}
+.anime-card[data-category="action"] {
+  --card-accent: #ef4444;
+  --card-accent-glow: rgba(239, 68, 68, 0.35);
+  --card-ambient: rgba(36, 13, 18, 0.85);
+}
+.anime-card[data-category="romance"] {
+  --card-accent: #ec4899;
+  --card-accent-glow: rgba(236, 72, 153, 0.35);
+  --card-ambient: rgba(38, 14, 34, 0.85);
+}
+.anime-card[data-category="spring"] {
+  --card-accent: #10b981;
+  --card-accent-glow: rgba(16, 185, 129, 0.35);
+  --card-ambient: rgba(14, 34, 26, 0.85);
+}
+.anime-card[data-category="summer"] {
+  --card-accent: #f59e0b;
+  --card-accent-glow: rgba(245, 158, 11, 0.35);
+  --card-ambient: rgba(36, 28, 12, 0.85);
+}
+.anime-card[data-category="autumn"] {
+  --card-accent: #ea580c;
+  --card-accent-glow: rgba(234, 88, 12, 0.35);
+  --card-ambient: rgba(38, 17, 10, 0.85);
+}
+.anime-card[data-category="winter"] {
+  --card-accent: #38bdf8;
+  --card-accent-glow: rgba(56, 189, 248, 0.35);
+  --card-ambient: rgba(13, 27, 43, 0.85);
+}
+.anime-card[data-category="shounen"] {
+  --card-accent: #f97316;
+  --card-accent-glow: rgba(249, 115, 22, 0.35);
+  --card-ambient: rgba(38, 16, 8, 0.85);
+}
+.anime-card[data-category="shoujo"] {
+  --card-accent: #c084fc;
+  --card-accent-glow: rgba(192, 132, 252, 0.35);
+  --card-ambient: rgba(33, 16, 38, 0.85);
+}
+.anime-card[data-category="kodomo"] {
+  --card-accent: #eab308;
+  --card-accent-glow: rgba(234, 179, 8, 0.35);
+  --card-ambient: rgba(36, 31, 10, 0.85);
+}
+.anime-card[data-category="seinen"] {
+  --card-accent: #94a3b8;
+  --card-accent-glow: rgba(148, 163, 184, 0.35);
+  --card-ambient: rgba(18, 23, 33, 0.85);
+}
+.anime-card[data-category="josei"] {
+  --card-accent: #a855f7;
+  --card-accent-glow: rgba(168, 85, 247, 0.35);
+  --card-ambient: rgba(31, 13, 36, 0.85);
+}
+
+/* Anime Card Studio Accent */
+.anime-card .card-studio {
+  color: var(--card-accent, var(--accent-cyan));
+  font-weight: 700;
+}
+
+/* Anime Card Tag Accent */
+.anime-card .anime-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+.anime-card:hover .anime-tag {
+  border-color: var(--card-accent, var(--accent-cyan));
+  color: #ffffff;
+}
+
+/* Category Page Hero Banner Lighting */
+.category-hero-banner {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.category-hero-banner .cat-hero-glow {
+  opacity: 0.32;
+  filter: blur(120px);
+}
