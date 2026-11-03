@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Anime Nexus - AI & Full Stack Platform</title>
+  <meta name="description" content="Sign in to Anime Nexus to access your curated recommendations, favorites vault, and ML popularity predictions.">
+  <meta name="theme-color" content="#07090e">
+
+  <!-- Favicon / Emoji Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="auth-page-wrapper">
+
+  <!-- Top Navigation Header -->
+  <header class="auth-page-nav">
+    <a href="index.html" class="auth-page-logo">
+      <div class="auth-page-logo-icon">⚡</div>
+      <div class="auth-page-logo-text">
+        <div class="auth-page-logo-title">ANIME<span>NEXUS</span></div>
+        <div class="auth-page-logo-sub">AI & Full Stack Platform</div>
+      </div>
+    </a>
+    <a href="index.html" class="auth-back-link">
+      <span>←</span>
+      <span>Back to Nexus</span>
+    </a>
+  </header>
+
+  <!-- Centerpiece Authentication Form Card -->
+  <main class="auth-page-content">
+    <div class="auth-page-card">
+      <div class="auth-card-badge">⚡</div>
+      <h1 class="auth-card-title">SIGN IN TO NEXUS</h1>
+      <p class="auth-card-subtitle">
+        Enter your credentials to access personalized recommendations, ML models, and your favorites vault.
+      </p>
+
+      <!-- 1-Click Quick Demo Bar -->
+      <div class="demo-login-bar">
+        <span class="demo-label">⚡ 1-Click Quick Demo Sign In:</span>
+        <div class="demo-btns-row">
+          <button type="button" class="demo-btn admin-demo-btn" id="btn-page-demo-admin" title="Login as Admin">
+            👑 Gojo (Admin)
+          </button>
+          <button type="button" class="demo-btn user-demo-btn" id="btn-page-demo-user" title="Login as Saitama User">
+            🥊 Saitama (User)
+          </button>
+        </div>
+      </div>
+
+      <!-- Alert Notification Banner -->
+      <div class="auth-alert hidden" id="page-auth-alert"></div>
+
+      <!-- Login Form -->
+      <form class="auth-form" id="page-login-form" novalidate>
+        <div class="form-group">
+          <label for="page-login-email">Email Address</label>
+          <input 
+            type="email" 
+            id="page-login-email" 
+            class="form-input" 
+            placeholder="e.g. saitama@hero.com" 
+            autocomplete="email" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="page-login-password">Password</label>
+          <div class="input-with-icon">
+            <input 
+              type="password" 
+              id="page-login-password" 
+              class="form-input" 
+              placeholder="••••••••" 
+              autocomplete="current-password" 
+              required
+            >
+            <button type="button" class="password-toggle-btn" id="toggle-password-btn" aria-label="Toggle password visibility">
+              <span id="toggle-password-icon">👁️</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-checkbox-row">
+          <label class="auth-checkbox-label">
+            <input type="checkbox" id="remember-me-checkbox" checked>
+            <span>Remember session</span>
+          </label>
+          <a href="#" class="auth-forgot-link" id="link-forgot-pass">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="page-login-submit">
+          <span>ENTER THE NEXUS</span> &rarr;
+        </button>
+      </form>
+
+      <!-- Switch to Register Link -->
+      <div class="auth-switch-box">
+        <span>Don't have an account yet?</span>
+        <a href="register.html" class="auth-switch-link">Create an account &rarr;</a>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="auth-security-badge">
+        <span>🔒</span>
+        <span>Secured with PBKDF2 & JWT Authentication</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="auth-page-footer">
+    Anime Nexus &copy; 2026 &bull; Built with Node.js REST API, SQLite/JSON Engine & Procedural Web Audio
+  </footer>
+
+  <!-- Script Module -->
+  <script type="module">
+    import { api } from './js/api.js';
+    import { soundEngine } from './js/audio.js';
+
+    const alertBox = document.getElementById('page-auth-alert');
+    const form = document.getElementById('page-login-form');
+    const emailInput = document.getElementById('page-login-email');
+    const passInput = document.getElementById('page-login-password');
+    const submitBtn = document.getElementById('page-login-submit');
+    const togglePassBtn = document.getElementById('toggle-password-btn');
+    const togglePassIcon = document.getElementById('toggle-password-icon');
+    const demoAdminBtn = document.getElementById('btn-page-demo-admin');
+    const demoUserBtn = document.getElementById('btn-page-demo-user');
+    const forgotLink = document.getElementById('link-forgot-pass');
+
+    // Retrieve redirect parameter if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectTarget = urlParams.get('redirect') || 'index.html';
+
+    function showAlert(message, type = 'error') {
+      alertBox.textContent = message;
+      alertBox.className = `auth-alert ${type}`;
+    }
+
+    function clearAlert() {
+      alertBox.className = 'auth-alert hidden';
+      alertBox.textContent = '';
+    }
+
+    // Toggle Password Visibility
+    if (togglePassBtn) {
+      togglePassBtn.addEventListener('click', () => {
+        soundEngine.playClick();
+        if (passInput.type === 'password') {
+          passInput.type = 'text';
+          togglePassIcon.textContent = '🙈';
+        } else {
+          passInput.type = 'password';
+          togglePassIcon.textContent = '👁️';
+        }
+      });
+    }
+
+    // Forgot Password Tooltip
+    if (forgotLink) {
+      forgotLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        soundEngine.playClick();
+        showAlert('Password recovery: Use the 1-Click Demo buttons above or log in as Gojo/Saitama!', 'success');
+      });
+    }
+
+    // Perform Login Flow
+    async function doLogin(email, password) {
+      clearAlert();
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>AUTHENTICATING...</span>';
+
+      try {
+        const user = await api.login(email, password);
+        soundEngine.playSparkleBurst();
+        showAlert(`Welcome back, ${user.username}! Redirecting to Nexus...`, 'success');
+        setTimeout(() => {
+          window.location.href = redirectTarget;
+        }, 800);
+      } catch (err) {
+        soundEngine.playClick();
+        showAlert(err.message || 'Login failed. Please check your credentials.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>ENTER THE NEXUS</span> &rarr;';
+      }
+    }
+
+    // Form Submit Handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const pass = passInput.value;
+
+      if (!email || !pass) {
+        showAlert('Please fill in both email and password.', 'error');
+        return;
+      }
+      await doLogin(email, pass);
+    });
+
+    // 1-Click Demo Logins
+    demoAdminBtn.addEventListener('click', () => {
+      soundEngine.playClick();
+      emailInput.value = 'admin@animenexus.io';
+      passInput.value = 'admin123';
+      doLogin('admin@animenexus.io', 'admin123');
+    });
+
+    demoUserBtn.addEventListener('click', () => {
+      soundEngine.playClick();
+      emailInput.value = 'saitama@hero.com';
+      passInput.value = 'punch123';
+      doLogin('saitama@hero.com', 'punch123');
+    });
+
+    // Check if already authenticated
+    if (api.currentUser) {
+      showAlert(`You are already signed in as ${api.currentUser.username}! Redirecting...`, 'success');
+      setTimeout(() => {
+        window.location.href = redirectTarget;
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

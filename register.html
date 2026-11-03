@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create an Account | Anime Nexus - AI & Full Stack Platform</title>
+  <meta name="description" content="Register for an Anime Nexus account to curate your anime favorites vault, get personalized AI predictions, and unleash 3D attack moves.">
+  <meta name="theme-color" content="#07090e">
+
+  <!-- Favicon / Emoji Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="auth-page-wrapper">
+
+  <!-- Top Navigation Header -->
+  <header class="auth-page-nav">
+    <a href="index.html" class="auth-page-logo">
+      <div class="auth-page-logo-icon">✨</div>
+      <div class="auth-page-logo-text">
+        <div class="auth-page-logo-title">ANIME<span>NEXUS</span></div>
+        <div class="auth-page-logo-sub">AI & Full Stack Platform</div>
+      </div>
+    </a>
+    <a href="index.html" class="auth-back-link">
+      <span>←</span>
+      <span>Back to Nexus</span>
+    </a>
+  </header>
+
+  <!-- Centerpiece Registration Form Card -->
+  <main class="auth-page-content">
+    <div class="auth-page-card">
+      <div class="auth-card-badge">✨</div>
+      <h1 class="auth-card-title">JOIN ANIME NEXUS</h1>
+      <p class="auth-card-subtitle">
+        Create your hero identity, track your favorite anime, and unlock full-stack ML popularity predictions.
+      </p>
+
+      <!-- Alert Notification Banner -->
+      <div class="auth-alert hidden" id="page-auth-alert"></div>
+
+      <!-- Registration Form -->
+      <form class="auth-form" id="page-register-form" novalidate>
+        <div class="form-group">
+          <label for="page-reg-username">Hero / Shinobi Alias</label>
+          <input 
+            type="text" 
+            id="page-reg-username" 
+            class="form-input" 
+            placeholder="e.g. GenosTheCyborg or Tanjiro" 
+            autocomplete="username" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="page-reg-email">Email Address</label>
+          <input 
+            type="email" 
+            id="page-reg-email" 
+            class="form-input" 
+            placeholder="e.g. genos@hero.com" 
+            autocomplete="email" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="page-reg-password">Password (min 6 characters)</label>
+          <div class="input-with-icon">
+            <input 
+              type="password" 
+              id="page-reg-password" 
+              class="form-input" 
+              placeholder="••••••••" 
+              autocomplete="new-password" 
+              minlength="6"
+              required
+            >
+            <button type="button" class="password-toggle-btn" id="toggle-reg-pass-btn" aria-label="Toggle password visibility">
+              <span id="toggle-reg-pass-icon">👁️</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="page-reg-confirm-password">Confirm Password</label>
+          <input 
+            type="password" 
+            id="page-reg-confirm-password" 
+            class="form-input" 
+            placeholder="••••••••" 
+            autocomplete="new-password" 
+            minlength="6"
+            required
+          >
+        </div>
+
+        <!-- Interactive Avatar Selector -->
+        <div class="form-group">
+          <label>Select Your Hero Avatar</label>
+          <div class="avatar-picker" id="page-avatar-picker">
+            <span class="avatar-option selected" data-avatar="⚡" title="Lightning">⚡</span>
+            <span class="avatar-option" data-avatar="🥊" title="Fist of Justice">🥊</span>
+            <span class="avatar-option" data-avatar="👑" title="Sorcerer King">👑</span>
+            <span class="avatar-option" data-avatar="🌸" title="Sakura Blossom">🌸</span>
+            <span class="avatar-option" data-avatar="🔮" title="Occult Domain">🔮</span>
+            <span class="avatar-option" data-avatar="🔥" title="Flame Blade">🔥</span>
+            <span class="avatar-option" data-avatar="❄️" title="Absolute Zero">❄️</span>
+            <span class="avatar-option" data-avatar="🗡️" title="Nichiren Katana">🗡️</span>
+            <span class="avatar-option" data-avatar="🎬" title="Cinema Director">🎬</span>
+            <span class="avatar-option" data-avatar="✨" title="Starlight Witch">✨</span>
+          </div>
+          <input type="hidden" id="page-selected-avatar" value="⚡">
+        </div>
+
+        <div class="auth-checkbox-row">
+          <label class="auth-checkbox-label">
+            <input type="checkbox" id="terms-checkbox" checked required>
+            <span>I agree to follow the Code of the Hero Guild</span>
+          </label>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="page-reg-submit">
+          <span>FORGE MY HERO IDENTITY</span> &rarr;
+        </button>
+      </form>
+
+      <!-- Switch to Login Link -->
+      <div class="auth-switch-box">
+        <span>Already have an account?</span>
+        <a href="login.html" class="auth-switch-link">Sign in to your account &rarr;</a>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="auth-security-badge">
+        <span>🛡️</span>
+        <span>Secured with Zero-Dependency PBKDF2 Password Hashing</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="auth-page-footer">
+    Anime Nexus &copy; 2026 &bull; Built with Node.js REST API, SQLite/JSON Engine & Procedural Web Audio
+  </footer>
+
+  <!-- Script Module -->
+  <script type="module">
+    import { api } from './js/api.js';
+    import { soundEngine } from './js/audio.js';
+
+    const alertBox = document.getElementById('page-auth-alert');
+    const form = document.getElementById('page-register-form');
+    const usernameInput = document.getElementById('page-reg-username');
+    const emailInput = document.getElementById('page-reg-email');
+    const passInput = document.getElementById('page-reg-password');
+    const confirmPassInput = document.getElementById('page-reg-confirm-password');
+    const avatarInput = document.getElementById('page-selected-avatar');
+    const avatarOptions = document.querySelectorAll('.avatar-option');
+    const submitBtn = document.getElementById('page-reg-submit');
+    const togglePassBtn = document.getElementById('toggle-reg-pass-btn');
+    const togglePassIcon = document.getElementById('toggle-reg-pass-icon');
+    const termsCheckbox = document.getElementById('terms-checkbox');
+
+    function showAlert(message, type = 'error') {
+      alertBox.textContent = message;
+      alertBox.className = `auth-alert ${type}`;
+    }
+
+    function clearAlert() {
+      alertBox.className = 'auth-alert hidden';
+      alertBox.textContent = '';
+    }
+
+    // Toggle Password Visibility
+    if (togglePassBtn) {
+      togglePassBtn.addEventListener('click', () => {
+        soundEngine.playClick();
+        if (passInput.type === 'password') {
+          passInput.type = 'text';
+          confirmPassInput.type = 'text';
+          togglePassIcon.textContent = '🙈';
+        } else {
+          passInput.type = 'password';
+          confirmPassInput.type = 'password';
+          togglePassIcon.textContent = '👁️';
+        }
+      });
+    }
+
+    // Avatar Selection
+    avatarOptions.forEach(opt => {
+      opt.addEventListener('click', () => {
+        soundEngine.playClick();
+        avatarOptions.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        avatarInput.value = opt.dataset.avatar;
+      });
+    });
+
+    // Form Submit Handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
+      const pass = passInput.value;
+      const confirmPass = confirmPassInput.value;
+      const avatar = avatarInput.value || '⚡';
+
+      if (!username || !email || !pass || !confirmPass) {
+        showAlert('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      if (pass.length < 6) {
+        showAlert('Password must be at least 6 characters long.', 'error');
+        return;
+      }
+
+      if (pass !== confirmPass) {
+        showAlert('Passwords do not match. Please re-enter.', 'error');
+        return;
+      }
+
+      if (!termsCheckbox.checked) {
+        showAlert('Please accept the Code of the Hero Guild to proceed.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>FORGING IDENTITY...</span>';
+
+      try {
+        const user = await api.register(username, email, pass, avatar);
+        soundEngine.playSparkleBurst();
+        showAlert(`Hero identity created! Welcome to the guild, ${user.username}! Redirecting...`, 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 900);
+      } catch (err) {
+        soundEngine.playClick();
+        showAlert(err.message || 'Registration failed. Email or username may already exist.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>FORGE MY HERO IDENTITY</span> &rarr;';
+      }
+    });
+
+    // Check if already authenticated
+    if (api.currentUser) {
+      showAlert(`You are already signed in as ${api.currentUser.username}! Redirecting to Nexus...`, 'success');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

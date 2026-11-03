@@ -198,6 +198,10 @@ export class AppRouter {
       this.renderAdmin();
     } else if (hash === 'ml-studio') {
       this.renderMLStudio();
+    } else if (hash === 'login') {
+      window.location.href = 'login.html';
+    } else if (hash === 'register') {
+      window.location.href = 'register.html';
     } else if (hash.startsWith('anime/')) {
       const animeId = hash.replace('anime/', '');
       this.openAnimeModal(animeId);

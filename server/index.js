@@ -382,7 +382,9 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   // STATIC FILE SERVING
   // ==========================================
-  const cleanPath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
+  let cleanPath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
+  if (cleanPath === 'login') cleanPath = 'login.html';
+  if (cleanPath === 'register') cleanPath = 'register.html';
   let filePath = path.resolve(PUBLIC_DIR, cleanPath);
   
   if (!filePath.toLowerCase().startsWith(PUBLIC_DIR.toLowerCase())) {

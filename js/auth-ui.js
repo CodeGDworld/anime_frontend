@@ -251,12 +251,10 @@ export class AuthAndPanelsUI {
     if (!user) {
       userSlot.innerHTML = `
         <div class="guest-auth-actions">
-          <button class="auth-btn login-btn" id="btn-open-login">Sign In</button>
-          <button class="auth-btn register-btn" id="btn-open-register">Register</button>
+          <a href="login.html" class="auth-btn login-btn" id="btn-open-login">Sign In</a>
+          <a href="register.html" class="auth-btn register-btn" id="btn-open-register">Register</a>
         </div>
       `;
-      document.getElementById('btn-open-login').addEventListener('click', () => this.showAuthModal('login'));
-      document.getElementById('btn-open-register').addEventListener('click', () => this.showAuthModal('register'));
     } else {
       userSlot.innerHTML = `
         <div class="user-profile-widget">
