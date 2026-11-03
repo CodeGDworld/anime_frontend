@@ -191,14 +191,15 @@ export class Category3DCube {
               <span>${cat.signatureMove.name.slice(0, 24)}</span>
             </span>
 
-            <!-- Poster thumbnails preview -->
+            <!-- Instant zero-latency SVG anime poster thumbnails -->
             <div class="face-posters-strip">
               ${animeSamples.map(a => `
                 <img 
-                  src="${getAnimePoster(a)}" 
+                  src="${createStylizedAnimePosterSVG(a)}" 
                   alt="${a.title}" 
                   class="face-poster-thumb"
-                  onerror="this.src='${createStylizedAnimePosterSVG(a)}'"
+                  loading="lazy"
+                  decoding="async"
                 />
               `).join('')}
             </div>
@@ -552,6 +553,8 @@ export class Anime3DCarousel {
                     src="${posterUrl}" 
                     alt="${anime.title}" 
                     class="card-3d-poster-img"
+                    loading="lazy"
+                    decoding="async"
                     onerror="this.src='${createStylizedAnimePosterSVG(anime)}'"
                   />
                   <div class="card-3d-overlay">

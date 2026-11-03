@@ -240,8 +240,7 @@ export class Video3DTheater {
     video3DShaderPipeline.init(this.container);
     video3DShaderPipeline.open(initialMove);
 
-    const start = performance.now();
-    const renderLoop = (time) => {
+    const renderLoop = () => {
       if (!this.isOpen) return;
 
       // Update telemetry FPS counter
@@ -250,11 +249,12 @@ export class Video3DTheater {
         fpsEl.textContent = `${video3DShaderPipeline.fps.toFixed(1)} FPS`;
       }
 
-      // Smooth camera interpolation
-      this.rotX += (this.targetRotX - this.rotX) * 0.1;
-      this.rotY += (this.targetRotY - this.rotY) * 0.1;
+      if (this.ctx) {
+        try {
+          this.render3DArena(performance.now());
+        } catch (e) {}
+      }
 
-      this.render3DArena(time - start);
       this.animId = requestAnimationFrame(renderLoop);
     };
 

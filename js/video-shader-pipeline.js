@@ -80,7 +80,8 @@ export class Video3DShaderPipeline {
       if (!vid) {
         vid = document.createElement('video');
         vid.id = `video-source-${move}`;
-        vid.autoplay = true;
+        vid.autoplay = false;
+        vid.preload = 'none';
         vid.muted = true;
         vid.loop = true;
         vid.playsInline = true;
@@ -130,6 +131,9 @@ export class Video3DShaderPipeline {
       const cy = h / 2;
       this.drawSakugaEffect(move, ctx, cx, cy, w, h, t, frame);
     };
+
+    // Draw initial frame immediately so stream never starts empty/stalled
+    renderSakugaFrame();
 
     try {
       if (typeof streamCanvas.captureStream === 'function' && !videoElement.srcObject) {

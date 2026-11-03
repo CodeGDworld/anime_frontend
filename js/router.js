@@ -1603,6 +1603,7 @@ export class AppRouter {
               alt="${anime.title}" 
               class="card-poster"
               loading="lazy"
+              decoding="async"
               onerror="this.src='${createStylizedAnimePosterSVG(anime)}'"
             />
             <div class="card-rating-badge">⭐ ${anime.rating}</div>
