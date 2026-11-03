@@ -518,7 +518,7 @@ export class AppRouter {
         </div>
       </section>
 
-      <section class="anime-shelf-container">
+      <section class="anime-shelf-container ${this.categoryViewMode === '3d-carousel' ? 'view-mode-3d' : 'view-mode-grid'}">
         <div class="shelf-controls-bar">
           <div class="shelf-title-group">
             <h2 class="shelf-title">10 CURATED RECOMMENDATIONS</h2>
@@ -586,24 +586,46 @@ export class AppRouter {
     const toggleGrid = document.getElementById('toggle-view-grid');
     const carouselMount = document.getElementById('cat-3d-carousel-mount');
     const gridMount = document.getElementById('anime-cards-grid');
+    const shelfContainer = document.querySelector('.anime-shelf-container');
 
     if (toggle3D && toggleGrid) {
       toggle3D.addEventListener('click', () => {
-        soundEngine.playClick();
+        if (this.categoryViewMode === '3d-carousel') return;
+        soundEngine.playWhoosh();
         this.categoryViewMode = '3d-carousel';
         toggle3D.classList.add('active');
         toggleGrid.classList.remove('active');
         carouselMount.classList.remove('hidden');
         gridMount.classList.add('hidden');
+
+        if (shelfContainer) {
+          shelfContainer.classList.add('view-mode-3d', 'mode-transitioning');
+          shelfContainer.classList.remove('view-mode-grid');
+          setTimeout(() => shelfContainer.classList.remove('mode-transitioning'), 600);
+        }
+
+        if (this.animeCarousel) {
+          this.animeCarousel.wakeLoop();
+        }
       });
 
       toggleGrid.addEventListener('click', () => {
-        soundEngine.playClick();
+        if (this.categoryViewMode === 'grid') return;
+        soundEngine.playWhoosh();
         this.categoryViewMode = 'grid';
         toggleGrid.classList.add('active');
         toggle3D.classList.remove('active');
         gridMount.classList.remove('hidden');
         carouselMount.classList.add('hidden');
+
+        if (shelfContainer) {
+          shelfContainer.classList.add('view-mode-grid', 'mode-transitioning');
+          shelfContainer.classList.remove('view-mode-3d');
+          setTimeout(() => shelfContainer.classList.remove('mode-transitioning'), 600);
+        }
+
+        gridMount.classList.add('stagger-entrance');
+        setTimeout(() => gridMount.classList.remove('stagger-entrance'), 600);
       });
     }
 
@@ -1604,7 +1626,7 @@ export class AppRouter {
               class="card-poster"
               loading="lazy"
               decoding="async"
-              onerror="this.src='${createStylizedAnimePosterSVG(anime)}'"
+              onerror="this.onerror=null; this.src='${createStylizedAnimePosterSVG(anime)}';"
             />
             <div class="card-rating-badge">⭐ ${anime.rating}</div>
             

@@ -181,11 +181,11 @@ export function getAnimePoster(anime) {
  * Generates dark, glowing anime poster art with Japanese calligraphy and studio logo
  */
 export function createStylizedAnimePosterSVG(anime) {
-  const title = (anime.title || 'Anime').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const jp = (anime.japaneseTitle || title).replace(/&/g, '&amp;');
-  const studio = (anime.studio || 'Studio').replace(/&/g, '&amp;');
+  const title = (anime.title || 'Anime').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;');
+  const jp = (anime.japaneseTitle || title).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
+  const studio = (anime.studio || 'Studio').replace(/&/g, '&amp;').replace(/'/g, '&#39;');
   const rating = anime.rating || '8.5';
-  const move = (anime.signatureMove || 'Secret Attack').replace(/&/g, '&amp;');
+  const move = (anime.signatureMove || 'Secret Attack').replace(/&/g, '&amp;').replace(/'/g, '&#39;');
 
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="100%" height="100%">
@@ -237,5 +237,12 @@ export function createStylizedAnimePosterSVG(anime) {
       <text x="45" y="540" font-family="'Space Grotesk', sans-serif" font-size="10" font-weight="700" fill="#fca5a5">💥 ${move.slice(0, 28)}</text>
     </svg>
   `;
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+
+  try {
+    if (typeof btoa !== 'undefined') {
+      const b64 = btoa(unescape(encodeURIComponent(svg)));
+      return `data:image/svg+xml;base64,${b64}`;
+    }
+  } catch (e) {}
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg).replace(/'/g, '%27')}`;
 }

@@ -536,8 +536,21 @@ export class Anime3DCarousel {
           </div>
         </div>
 
-        <!-- 3D Viewport -->
+        <!-- 3D Viewport with Surrounding Holographic Atmosphere -->
         <div class="carousel-3d-viewport" id="carousel-viewport">
+          <!-- Surrounding Atmosphere Effects -->
+          <div class="carousel-ambient-spotlight"></div>
+          <div class="carousel-hologram-floor"></div>
+          <div class="carousel-stage-ring"></div>
+          <div class="carousel-spatial-particles">
+            <span class="c-spark c-spark-1"></span>
+            <span class="c-spark c-spark-2"></span>
+            <span class="c-spark c-spark-3"></span>
+            <span class="c-spark c-spark-4"></span>
+            <span class="c-spark c-spark-5"></span>
+            <span class="c-spark c-spark-6"></span>
+          </div>
+
           <div class="carousel-3d-ring" id="carousel-ring">
             ${this.animeList.map((anime, idx) => {
               const cardAngle = idx * angleStep;
@@ -555,7 +568,7 @@ export class Anime3DCarousel {
                     class="card-3d-poster-img"
                     loading="lazy"
                     decoding="async"
-                    onerror="this.src='${createStylizedAnimePosterSVG(anime)}'"
+                    onerror="this.onerror=null; this.src='${createStylizedAnimePosterSVG(anime)}';"
                   />
                   <div class="card-3d-overlay">
                     <span>⭐</span>
